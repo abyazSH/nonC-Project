@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NonC_Project">
         <activity
+            android:name=".SplashScreenFail"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreen"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
