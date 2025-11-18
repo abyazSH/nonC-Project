@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NonC_Project">
         <activity
+            android:name=".Registration"
+            android:exported="false" />
+        <activity
+            android:name=".LoginPage"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreenFail"
             android:exported="false" />
         <activity

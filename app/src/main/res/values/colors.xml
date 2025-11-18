@@ -3,5 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="bg_color">#FFFAC4</color>
+    <color name="text_color_reg">#2C33D1</color>
+    <color name="button_inputan">#97908B</color>
+    <color name="button_chalant">#2C33D1</color>
 
 </resources>
