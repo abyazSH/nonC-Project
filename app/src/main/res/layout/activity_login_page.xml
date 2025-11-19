@@ -64,6 +64,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/inputan"
         android:ems="10"
+        android:gravity="center"
         android:inputType="textPassword"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +81,8 @@
         android:ems="10"
         android:inputType="text"
         android:padding="10dp"
-        android:text="masukkan username"
+        android:gravity="center"
+        android:text="  "
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
@@ -111,9 +113,9 @@
         app:layout_constraintTop_toBottomOf="@+id/button4" />
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:id="@+id/ikon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/InputanPassword"
         app:layout_constraintEnd_toEndOf="@+id/InputanPassword"
         app:layout_constraintHorizontal_bias="0.918"
