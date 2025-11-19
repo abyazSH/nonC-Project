@@ -11,27 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NonC_Project">
-        <activity
-            android:name=".Registration"
-            android:exported="false" />
-        <activity
-            android:name=".LoginPage"
-            android:exported="false" />
-        <activity
-            android:name=".SplashScreenFail"
-            android:exported="false" />
+
+        <!-- Halaman pertama (launcher) -->
         <activity
             android:name=".SplashScreen"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Activity lain -->
+        <activity android:name=".LoginPage" android:exported="false" />
+        <activity android:name=".Registration" android:exported="false" />
+        <activity android:name=".HomePage" android:exported="false" />
+        <activity android:name=".SplashScreenFail" android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="false" />
+
     </application>
 
 </manifest>

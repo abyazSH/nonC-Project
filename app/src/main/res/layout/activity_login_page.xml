@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -17,22 +18,13 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
 
-    <Button
-        android:id="@+id/babutt1"
-        android:layout_width="307dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/inputan"
-        android:shadowColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="90dp"
+        android:textColor="@color/black"
         android:layout_height="24dp"
         android:layout_marginTop="28dp"
         android:text="Username"
@@ -45,45 +37,37 @@
         android:id="@+id/textView3"
         android:layout_width="93dp"
         android:layout_height="22dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:text="Password"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.163"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/babutt1" />
-
-    <Button
-        android:id="@+id/babutt2"
-        android:layout_width="310dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/inputan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/inputanUsername" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="219dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:text="Login"
+        android:layout_marginTop="35dp"
         android:background="@drawable/button"
+        android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/babutt2" />
+        app:layout_constraintTop_toBottomOf="@+id/InputanPassword" />
 
     <EditText
         android:id="@+id/InputanPassword"
-        android:layout_width="245dp"
+        android:layout_width="276dp"
         android:layout_height="44dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/inputan"
         android:ems="10"
-        android:textColor="@color/black"
         android:inputType="textPassword"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -91,14 +75,15 @@
         android:id="@+id/inputanUsername"
         android:layout_width="272dp"
         android:layout_height="42dp"
-        android:padding="10dp"
         android:layout_marginTop="12dp"
+        android:background="@drawable/inputan"
         android:ems="10"
         android:inputType="text"
+        android:padding="10dp"
         android:text="masukkan username"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -114,7 +99,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button4" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/Registrasi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -128,12 +113,12 @@
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="30dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
-        app:layout_constraintStart_toEndOf="@+id/InputanPassword"
-        app:layout_constraintTop_toBottomOf="@+id/babutt1"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/InputanPassword"
+        app:layout_constraintEnd_toEndOf="@+id/InputanPassword"
+        app:layout_constraintHorizontal_bias="0.918"
+        app:layout_constraintStart_toStartOf="@+id/InputanPassword"
+        app:layout_constraintTop_toTopOf="@+id/InputanPassword"
         app:srcCompat="@drawable/eye" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

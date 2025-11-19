@@ -29,17 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="317dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/inputan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
@@ -49,18 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="316dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/inputan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/inputUser" />
 
     <TextView
         android:id="@+id/textView8"
@@ -68,22 +46,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="Confirm Password"
-        android:background=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.179"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="318dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/inputan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/InputPass" />
 
     <Button
         android:id="@+id/button5"
@@ -93,10 +59,10 @@
         android:text="Registrasi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
-        app:layout_constraintVertical_bias="0.196" />
+        app:layout_constraintTop_toBottomOf="@+id/InputPassconf"
+        app:layout_constraintVertical_bias="0.097" />
 
     <EditText
         android:id="@+id/inputUser"
@@ -104,6 +70,7 @@
         android:layout_height="49dp"
         android:ems="10"
         android:inputType="text"
+        android:background="@drawable/inputan"
         android:text="Masukkan Username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,48 +78,50 @@
 
     <EditText
         android:id="@+id/InputPass"
-        android:layout_width="258dp"
-        android:layout_height="35dp"
+        android:layout_width="287dp"
+        android:layout_height="39dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:background="@drawable/inputan"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.405"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
         android:id="@+id/InputPassconf"
-        android:layout_width="258dp"
-        android:layout_height="35dp"
+        android:layout_width="287dp"
+        android:layout_height="39dp"
         android:layout_marginTop="12dp"
+        android:background="@drawable/inputan"
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.405"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="39dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/InputPass"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        android:layout_height="39dp"
+        app:layout_constraintBottom_toBottomOf="@+id/InputPass"
+        app:layout_constraintEnd_toEndOf="@+id/InputPass"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/InputPass"
+        app:layout_constraintTop_toTopOf="@+id/InputPass"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/eye" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="39dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/InputPassconf"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        android:layout_height="39dp"
+        app:layout_constraintBottom_toBottomOf="@+id/InputPassconf"
+        app:layout_constraintEnd_toEndOf="@+id/InputPassconf"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/InputPassconf"
+        app:layout_constraintTop_toTopOf="@+id/InputPassconf"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/eye" />
 
     <TextView
