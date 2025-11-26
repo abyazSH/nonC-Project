@@ -1,11 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HomePage">
+    android:layout_height="match_parent">
 
-  </ScrollView>
+  <LinearLayout
+      android:id="@+id/header_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:background="@color/header_bg"
+      android:padding="12dp"
+      android:elevation="2dp">
+
+    <ImageView
+        android:id="@+id/icon_menu"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_menu"
+        android:layout_gravity="center_vertical"
+        android:paddingEnd="8dp"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+      <TextView
+          android:id="@+id/welcome_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="SELAMAT DATANG"
+          android:textSize="22sp"
+          android:textStyle="bold"
+          android:textColor="#222222"/>
+
+      <TextView
+          android:id="@+id/username_text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="[USERNAME]"
+          android:textSize="14sp"
+          android:textColor="#CCCCCC"/>
+    </LinearLayout>
+  </LinearLayout>
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/header_container"
+      android:layout_above="@id/bottom_navigation"
+      android:padding="16dp"
+      android:clipToPadding="false"/>
+
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+      android:id="@+id/bottom_navigation"
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      android:layout_alignParentBottom="true"
+      android:background="@color/white"
+      app:menu="@menu/bottom_nav_menu"/>
+
+</RelativeLayout>
