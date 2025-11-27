@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/sedangdianalisa">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,8 +25,7 @@
                     android:id="@+id/header_image"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_sedang_analisa1"/>
+                    android:scaleType="centerCrop"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -63,9 +62,8 @@
             <ImageView
                 android:id="@+id/main_image"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_sedang_analisa2"/>
+                android:layout_height="313dp"
+                android:scaleType="centerCrop"/>
 
             <!-- Music Player Card -->
             <androidx.cardview.widget.CardView
@@ -87,7 +85,7 @@
                         android:id="@+id/music_logo"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
-                        android:src="@drawable/logo_music"
+                        android:src="@drawable/logo"
                         android:layout_marginEnd="16dp"/>
 
                     <LinearLayout
@@ -109,7 +107,7 @@
                             android:id="@+id/artist_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="REZKI & ABYAZ"
+                            android:text="REZKI &amp; ABYAZ"
                             android:textSize="14sp"
                             android:textColor="@color/white"/>
                     </LinearLayout>
@@ -137,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:text="Menganalisis data..."
                     android:textSize="14sp"
-                    android:textColor="#888888"
+                    android:textColor="#FAFAFA"
                     android:layout_marginTop="8dp"/>
             </LinearLayout>
 
