@@ -1,31 +1,28 @@
 package com.example.nonc_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
+import com.example.nonc_project.databinding.ActivityInputAnalisa1Binding
 
-class InputAnalisaActivity : AppCompatActivity() {
+class inputAnalisa1 : AppCompatActivity() {  // Sesuai nama file
 
-    private lateinit var inputField: TextInputEditText
-    private lateinit var btnSelanjutnya: MaterialButton
+    private lateinit var binding: ActivityInputAnalisa1Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_input_analisa1)
+        binding = ActivityInputAnalisa1Binding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        inputField = findViewById(R.id.input_field)
-        btnSelanjutnya = findViewById(R.id.btn_selanjutnya)
-
-        btnSelanjutnya.setOnClickListener {
-            val input = inputField.text.toString()
+        binding.btnSelanjutnya.setOnClickListener {
+            val input = binding.inputField.text.toString()
 
             if (input.isEmpty()) {
-                Toast.makeText(this, "Harap isi jam belajar per minggu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Harap isi data", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Input: $input jam/minggu", Toast.LENGTH_SHORT).show()
-                // Lanjutkan ke activity berikutnya atau proses data
+                val intent = Intent(this, inputAnalisa2::class.java)
+                startActivity(intent)
             }
         }
     }

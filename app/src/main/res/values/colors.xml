@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="bg_color">#FFFAC4</color>
+    <color name="bg_color">#FFFCF0</color>
     <color name="header_bg">#FFFCEB</color>
     <color name="card_bg">#FFFFFFFF</color>
     <color name="primary">#2C33D1</color>

@@ -1,32 +1,30 @@
 package com.example.nonc_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
+import com.example.nonc_project.databinding.ActivityInputAnalisa6Binding
 
-class InputAnalisa6Activity : AppCompatActivity() {
+class inputAnalisa6 : AppCompatActivity() {
 
-    private lateinit var inputField: TextInputEditText
-    private lateinit var btnSelanjutnya: MaterialButton
+    private lateinit var binding: ActivityInputAnalisa6Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_input_analisa6)
+        binding = ActivityInputAnalisa6Binding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        inputField = findViewById(R.id.input_field)
-        btnSelanjutnya = findViewById(R.id.btn_selanjutnya)
-
-        btnSelanjutnya.setOnClickListener {
-            val input = inputField.text.toString().trim().lowercase()
+        binding.btnSelanjutnya.setOnClickListener {
+            val input = binding.inputField.text.toString().trim().lowercase()
 
             if (input.isEmpty()) {
                 Toast.makeText(this, "Harap isi tingkat motivasi", Toast.LENGTH_SHORT).show()
             } else if (input != "rendah" && input != "sedang" && input != "tinggi") {
                 Toast.makeText(this, "Pilihan harus: Rendah, Sedang, atau Tinggi", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Tingkat motivasi: ${input.capitalize()}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, inputAnalisa7::class.java)
+                startActivity(intent)
             }
         }
     }

@@ -3,26 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-    <!-- Background Image Full Screen -->
-    <ImageView
-        android:id="@+id/background_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_hp2"/>
-
-    <!-- Overlay Gelap -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#99000000"/>
-
-    <!-- Content di atas background -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigation"
         android:fillViewport="true">
 
         <LinearLayout
@@ -31,109 +18,108 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Header Text -->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="12dp"
-                android:text="Sedang Dianalisa"
-                android:textColor="@color/white"
-                android:textSize="32sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Data kamu sedang dianalisis untuk mengenali pola belajar, kebiasaan harian, dan faktor yang mempengaruhi performa akademik secara menyeluruh."
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:lineSpacingExtra="4dp"
-                android:layout_marginBottom="32dp"/>
-
-            <!-- Spacer -->
-            <View
+            <!-- Header -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
 
-            <!-- Music Player Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="HASIL AKHIR"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="KONDISI"
+                        android:textSize="14sp"
+                        android:textColor="#888888"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/icon_search"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_history"
+                    android:layout_marginEnd="16dp"/>
+
+                <ImageView
+                    android:id="@+id/icon_menu"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_menu"/>
+            </LinearLayout>
+
+            <!-- Image Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="8dp"
-                app:cardBackgroundColor="@color/accent">
+                app:cardElevation="4dp">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/result_image"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:id="@+id/music_logo"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:src="@drawable/logo"
-                        android:layout_marginEnd="16dp"/>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/song_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="NON-CHALANT"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"/>
-
-                        <TextView
-                            android:id="@+id/artist_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="REZKI  ABYAZ"
-                            android:textSize="14sp"
-                            android:textColor="@color/white"/>
-                    </LinearLayout>
-                </LinearLayout>
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_hp4"/>
             </androidx.cardview.widget.CardView>
 
-            <!-- Progress Section -->
-            <LinearLayout
+            <!-- Hasil Akhir Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HASIL AKHIR"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Status Badge -->
+            <TextView
+                android:id="@+id/status_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LULUS"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Description Text -->
+            <TextView
+                android:id="@+id/result_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginBottom="32dp">
-
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    android:progressTint="@color/white"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Menganalisis data..."
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"/>
-            </LinearLayout>
+                android:text="Selamat! Hasil prediksi menunjukkan performa akademikmu berada pada tingkat yang baik. Pertahankan kebiasaan belajarmu dengan jadwal yang teratur, usahakan tetap tidur cukup antara 6-8 jam setiap malam, dan luangkan waktu untuk berolahraga ringan agar tubuh tetap bugar. Terus tingkatkan motivasi belajar dengan menetapkan target mingguan, aktif berdiskusi di kelas, serta jaga keseimbangan antara waktu belajar dan istirahat. Pola hidup yang sehat dan disiplin akan membantu mempertahankan bahkan meningkatkan prestasimu di masa depan."
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:lineSpacingExtra="4dp"/>
 
         </LinearLayout>
     </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/accent"
+        app:itemIconTint="@color/black"
+        app:menu="@menu/bottom_nav_menu"/>
 
 </RelativeLayout>

@@ -4,35 +4,29 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
+import com.example.nonc_project.databinding.ActivityInputAnalisa2Binding
 
-class InputAnalisa2Activity : AppCompatActivity() {
+class inputAnalisa2 : AppCompatActivity() {
 
-    private lateinit var inputField: TextInputEditText
-    private lateinit var btnSelanjutnya: MaterialButton
+    private lateinit var binding: ActivityInputAnalisa2Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_input_analisa2)
+        binding = ActivityInputAnalisa2Binding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        inputField = findViewById(R.id.input_field)
-        btnSelanjutnya = findViewById(R.id.btn_selanjutnya)
+        val jamBelajar = intent.getStringExtra("jamBelajar")
 
-        btnSelanjutnya.setOnClickListener {
-            val input = inputField.text.toString()
+        binding.btnSelanjutnya.setOnClickListener {
+            val input = binding.inputField.text.toString()
 
             if (input.isEmpty()) {
-                Toast.makeText(this, "Harap isi persentase kehadiran", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Harap isi kehadiran", Toast.LENGTH_SHORT).show()
             } else {
-                val percentage = input.toDoubleOrNull()
-                if (percentage == null || percentage < 0 || percentage > 100) {
-                    Toast.makeText(this, "Masukkan persentase valid (0-100)", Toast.LENGTH_SHORT).show()
-                } else {
-                    // Simpan data atau kirim ke activity berikutnya
-                    Toast.makeText(this, "Kehadiran: $input%", Toast.LENGTH_SHORT).show()
-
-                }
+                val intent = Intent(this, inputAnalisa3::class.java)
+                intent.putExtra("jamBelajar", jamBelajar)
+                intent.putExtra("kehadiran", input)
+                startActivity(intent)
             }
         }
     }

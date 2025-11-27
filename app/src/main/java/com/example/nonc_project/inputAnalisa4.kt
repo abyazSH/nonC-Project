@@ -1,25 +1,22 @@
 package com.example.nonc_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
+import com.example.nonc_project.databinding.ActivityInputAnalisa4Binding
 
-class InputAnalisa4Activity : AppCompatActivity() {
+class inputAnalisa4 : AppCompatActivity() {
 
-    private lateinit var inputField: TextInputEditText
-    private lateinit var btnSelanjutnya: MaterialButton
+    private lateinit var binding: ActivityInputAnalisa4Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_input_analisa4)
+        binding = ActivityInputAnalisa4Binding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        inputField = findViewById(R.id.input_field)
-        btnSelanjutnya = findViewById(R.id.btn_selanjutnya)
-
-        btnSelanjutnya.setOnClickListener {
-            val input = inputField.text.toString()
+        binding.btnSelanjutnya.setOnClickListener {
+            val input = binding.inputField.text.toString()
 
             if (input.isEmpty()) {
                 Toast.makeText(this, "Harap isi jam tidur per hari", Toast.LENGTH_SHORT).show()
@@ -28,7 +25,8 @@ class InputAnalisa4Activity : AppCompatActivity() {
                 if (hours == null || hours < 0 || hours > 24) {
                     Toast.makeText(this, "Masukkan jam tidur valid (0-24)", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "Jam tidur: $input jam/hari", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, inputAnalisa5::class.java)
+                    startActivity(intent)
                 }
             }
         }

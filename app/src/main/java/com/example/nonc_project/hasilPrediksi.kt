@@ -1,24 +1,47 @@
 package com.example.nonc_project
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nonc_project.databinding.ActivityHasilPrediksiBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class SedangAnalisaActivity : AppCompatActivity() {
+class hasilPrediksi : AppCompatActivity() {
+
+    private lateinit var binding: ActivityHasilPrediksiBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sedang_analisa)
+        binding = ActivityHasilPrediksiBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Simulasi proses analisis selama 5 detik
-        Handler(Looper.getMainLooper()).postDelayed({
-            Toast.makeText(this, "Analisis selesai!", Toast.LENGTH_SHORT).show()
-            // Navigate ke hasil prediksi
-            // val intent = Intent(this, HasilPrediksiActivity::class.java)
-            // startActivity(intent)
-            // finish()
-        }, 5000)
+        // Set hasil prediksi (nanti bisa dari data yang dikirim dari loading)
+        binding.statusBadge.text = "LULUS"
+        binding.resultDescription.text = """
+            Selamat! Hasil prediksi menunjukkan performa akademikmu berada pada tingkat yang baik. 
+            Pertahankan kebiasaan belajarmu dengan jadwal yang teratur, usahakan tetap tidur cukup antara 
+            6-8 jam setiap malam, dan luangkan waktu untuk berolahraga ringan agar tubuh tetap bugar. Terus 
+            tingkatkan motivasi belajar dengan menetapkan target mingguan, aktif berdiskusi di kelas, serta 
+            jaga keseimbangan antara waktu belajar dan istirahat. Pola hidup yang sehat dan disiplin akan 
+            membantu mempertahankan bahkan meningkatkan prestasimu di masa depan.
+        """.trimIndent()
+
+        // Bottom Navigation
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    val intent = Intent(this, HomePage::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.nav_profile -> {
+                    // Navigate ke profile page
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }

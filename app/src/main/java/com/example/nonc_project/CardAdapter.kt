@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CardAdapter(
     private val items: List<CardItem>,
-    private val onItemClick: (CardItem, Int) -> Unit
+    private val onItemClick: (CardItem, Int) -> Unit  // Lambda untuk click dengan position
 ) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,6 +34,7 @@ class CardAdapter(
             titleItem.text = item.title
             descItem.text = item.description
 
+            // Set click listener pada seluruh item
             itemView.setOnClickListener {
                 onItemClick(item, adapterPosition)
             }

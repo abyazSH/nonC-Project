@@ -1,24 +1,27 @@
 package com.example.nonc_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nonc_project.databinding.ActivityAnalisaLoadingBinding
 
-class SedangAnalisaActivity : AppCompatActivity() {
+class analisaLoading : AppCompatActivity() {
+
+    private lateinit var binding: ActivityAnalisaLoadingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_analisa_loading)
+        binding = ActivityAnalisaLoadingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Simulasi proses analisis selama 5 detik
         Handler(Looper.getMainLooper()).postDelayed({
-            Toast.makeText(this, "Analisis selesai!", Toast.LENGTH_SHORT).show()
-            // Navigate ke hasil prediksi
-            // val intent = Intent(this, HasilPrediksiActivity::class.java)
-            // startActivity(intent)
-            // finish()
-        }, 5000)
+            // Setelah loading selesai, otomatis ke HasilPrediksi
+            val intent = Intent(this, hasilPrediksi::class.java)
+            startActivity(intent)
+            finish() // Tutup loading activity agar tidak bisa back
+        }, 5000) // 5000 ms = 5 detik
     }
 }

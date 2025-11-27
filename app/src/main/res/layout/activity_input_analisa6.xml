@@ -57,16 +57,14 @@
             android:textColor="@color/black"
             android:layout_marginBottom="8dp"/>
 
+
         <TextView
-            android:id="@+id/section_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Tingkat motivasi menggambarkan seberapa besar dorongan dan semangat kamu dalam mencapai tujuan akademik:"
             android:textSize="14sp"
             android:textColor="#666666"
-            android:lineSpacingExtra="4dp"
-            android:layout_marginBottom="8dp">
-            <![CDATA[Tingkat motivasi menggambarkan seberapa besar dorongan dan semangat kamu dalam mencapai tujuan akademik:]]>
-        </TextView>
+            android:layout_marginBottom="4dp"/>
 
         <TextView
             android:layout_width="wrap_content"

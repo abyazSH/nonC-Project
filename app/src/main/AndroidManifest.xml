@@ -12,41 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NonC_Project">
         <activity
-            android:name=".hasilPrediksi"
+            android:name=".profile"
             android:exported="false" />
         <activity
-            android:name=".analisaLoading"
+            android:name=".itemRiwayat"
             android:exported="false" />
         <activity
-            android:name=".prediksiKlasifikasiPage"
+            android:name=".riwayatPrediksi"
             android:exported="false" />
         <activity
-            android:name=".inputAnalisa8"
-            android:exported="false" />
-        <activity
-            android:name=".inputAnalisa7"
-            android:exported="false" />
-        <activity
-            android:name=".inputAnalisa6"
-            android:exported="false" />
-        <activity
-            android:name=".inputAnalisa5"
-            android:exported="false" />
-        <activity
-            android:name=".inputAnalisa4"
-            android:exported="false" />
-        <activity
-            android:name=".inputAnalisa3"
-            android:exported="false" />
-        <activity
-            android:name=".inputAnalisa2"
-            android:exported="false" />
-        <activity
-            android:name=".inputAnalisa_1"
-            android:exported="false" />
-        <activity
-            android:name=".inpur_analisa"
-            android:exported="false" />
+            android:name=".inputAnalisa9"
+            android:exported="false" /> <!-- Main Launcher -->
         <activity
             android:name=".HomePage"
             android:exported="true">
@@ -55,7 +31,40 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Activity lain tanpa launcher -->
+        </activity> <!-- Prediksi Flow -->
+        <activity
+            android:name=".prediksiKlasifikasiPage"
+            android:exported="false" /> <!-- Input Analisa Activities -->
+        <activity
+            android:name=".inputAnalisa1"
+            android:exported="false" />
+        <activity
+            android:name=".inputAnalisa2"
+            android:exported="false" />
+        <activity
+            android:name=".inputAnalisa3"
+            android:exported="false" />
+        <activity
+            android:name=".inputAnalisa4"
+            android:exported="false" />
+        <activity
+            android:name=".inputAnalisa5"
+            android:exported="false" />
+        <activity
+            android:name=".inputAnalisa6"
+            android:exported="false" />
+        <activity
+            android:name=".inputAnalisa7"
+            android:exported="false" />
+        <activity
+            android:name=".inputAnalisa8"
+            android:exported="false" /> <!-- Loading & Result -->
+        <activity
+            android:name=".analisaLoading"
+            android:exported="false" />
+        <activity
+            android:name=".hasilPrediksi"
+            android:exported="false" /> <!-- Other Activities -->
         <activity
             android:name=".SplashScreen"
             android:exported="false" />

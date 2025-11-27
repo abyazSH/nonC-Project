@@ -1,34 +1,32 @@
 package com.example.nonc_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
+import com.example.nonc_project.databinding.ActivityInputAnalisa5Binding
 
-class InputAnalisa5Activity : AppCompatActivity() {
+class inputAnalisa5 : AppCompatActivity() {
 
-    private lateinit var inputField: TextInputEditText
-    private lateinit var btnSelanjutnya: MaterialButton
+    private lateinit var binding: ActivityInputAnalisa5Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_input_analisa5)
+        binding = ActivityInputAnalisa5Binding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        inputField = findViewById(R.id.input_field)
-        btnSelanjutnya = findViewById(R.id.btn_selanjutnya)
-
-        btnSelanjutnya.setOnClickListener {
-            val input = inputField.text.toString()
+        binding.btnSelanjutnya.setOnClickListener {
+            val input = binding.inputField.text.toString()
 
             if (input.isEmpty()) {
                 Toast.makeText(this, "Harap isi nilai tahun lalu", Toast.LENGTH_SHORT).show()
             } else {
                 val score = input.toDoubleOrNull()
-                if (score == null || score < 0 || score > 4) {
-                    Toast.makeText(this, "Masukkan nilai valid (0-4)", Toast.LENGTH_SHORT).show()
+                if (score == null || score < 0 || score > 100) {
+                    Toast.makeText(this, "Masukkan nilai valid (0-100)", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "Nilai tahun lalu: $input", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, inputAnalisa6::class.java)
+                    startActivity(intent)
                 }
             }
         }
