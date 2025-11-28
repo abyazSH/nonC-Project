@@ -1,12 +1,12 @@
 package com.example.nonc_project.fiturMl
 
-import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nonc_project.R          // ⬅️ INI YANG BENAR
 import com.example.nonc_project.databinding.ActivityInputAnalisa9Binding
 
 class inputAnalisa9 : AppCompatActivity() {
@@ -25,25 +25,31 @@ class inputAnalisa9 : AppCompatActivity() {
 
             if (input.isEmpty()) {
                 Toast.makeText(this, "Harap pilih jawaban", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Kesulitan belajar: $input", Toast.LENGTH_SHORT).show()
-                // Ke AnalisaLoading
-                val intent = Intent(this, analisaLoading::class.java)
-                startActivity(intent)
+                return@setOnClickListener
             }
+
+            val encodedValue = when (input) {
+                "Ya" -> 1.0f
+                "Tidak" -> 0.0f
+                "Kadang-kadang" -> 0.5f
+                else -> 0.0f
+            }
+
+            MLInputHolder.data.learningDisabilities = encodedValue
+
+            startActivity(Intent(this, analisaLoading::class.java))
+            finish()
         }
     }
 
     private fun setupDropdown() {
         val options = arrayOf("Ya", "Tidak", "Kadang-kadang")
 
-        val adapter = ArrayAdapter(this, R.layout.simple_dropdown_item_1line, options)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, options)
 
         (binding.inputField as? AutoCompleteTextView)?.apply {
             setAdapter(adapter)
-            setOnClickListener {
-                showDropDown()
-            }
+            setOnClickListener { showDropDown() }
         }
     }
 }

@@ -16,19 +16,25 @@ class inputAnalisa2 : AppCompatActivity() {
         binding = ActivityInputAnalisa2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val jamBelajar = intent.getStringExtra("jamBelajar")
-
         binding.btnSelanjutnya.setOnClickListener {
             val input = binding.inputField.text.toString()
 
             if (input.isEmpty()) {
                 Toast.makeText(this, "Harap isi kehadiran", Toast.LENGTH_SHORT).show()
-            } else {
-                val intent = Intent(this, inputAnalisa3::class.java)
-                intent.putExtra("jamBelajar", jamBelajar)
-                intent.putExtra("kehadiran", input)
-                startActivity(intent)
+                return@setOnClickListener
             }
+
+            val attendanceValue = input.toFloatOrNull()
+            if (attendanceValue == null || attendanceValue < 0f || attendanceValue > 100f) {
+                Toast.makeText(this, "Masukkan angka valid (0–100)", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 🔥 SIMPAN NILAI KE MLInputHolder
+            MLInputHolder.data.attendance = attendanceValue
+
+            // Lanjut ke input berikutnya
+            startActivity(Intent(this, inputAnalisa3::class.java))
         }
     }
 }

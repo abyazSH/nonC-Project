@@ -16,18 +16,20 @@ class hasilPrediksi : AppCompatActivity() {
         binding = ActivityHasilPrediksiBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set hasil prediksi (nanti bisa dari data yang dikirim dari loading)
-        binding.statusBadge.text = "LULUS"
-        binding.resultDescription.text = """
-            Selamat! Hasil prediksi menunjukkan performa akademikmu berada pada tingkat yang baik. 
-            Pertahankan kebiasaan belajarmu dengan jadwal yang teratur, usahakan tetap tidur cukup antara 
-            6-8 jam setiap malam, dan luangkan waktu untuk berolahraga ringan agar tubuh tetap bugar. Terus 
-            tingkatkan motivasi belajar dengan menetapkan target mingguan, aktif berdiskusi di kelas, serta 
-            jaga keseimbangan antara waktu belajar dan istirahat. Pola hidup yang sehat dan disiplin akan 
-            membantu mempertahankan bahkan meningkatkan prestasimu di masa depan.
-        """.trimIndent()
+        // 🔥 Ambil hasil prediksi dari ML
+        val prediksi = intent.getStringExtra("prediksi") ?: "Tidak diketahui"
 
-        // Bottom Navigation
+        binding.statusBadge.text = prediksi
+
+        binding.resultDescription.text = when (prediksi) {
+            "A" -> "Kamu sangat luar biasa! Pertahankan performamu 👍"
+            "AB" -> "Kamu sudah bagus, masih ada ruang untuk lebih baik!"
+            "B" -> "Cukup stabil, tetap fokus dan tingkatkan lagi."
+            "C" -> "Perlu meningkatkan pola belajar dan konsistensi."
+            "F" -> "Perlu perhatian! Mari perbaiki jadwal belajar dan kebiasaanmu."
+            else -> "Data tidak valid atau prediksi gagal."
+        }
+
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
@@ -35,10 +37,6 @@ class hasilPrediksi : AppCompatActivity() {
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
                     finish()
-                    true
-                }
-                R.id.nav_profile -> {
-                    // Navigate ke profile page
                     true
                 }
                 else -> false

@@ -21,16 +21,20 @@ class inputAnalisa8 : AppCompatActivity() {
 
             if (input.isEmpty()) {
                 Toast.makeText(this, "Harap isi jam olahraga per minggu", Toast.LENGTH_SHORT).show()
-            } else {
-                val hours = input.toDoubleOrNull()
-                if (hours == null || hours < 0) {
-                    Toast.makeText(this, "Masukkan jam yang valid", Toast.LENGTH_SHORT).show()
-                } else {
-                    // Ke AnalisaLoadingActivity
-                    val intent = Intent(this, inputAnalisa9::class.java)
-                    startActivity(intent)
-                }
+                return@setOnClickListener
             }
+
+            val hours = input.toFloatOrNull()
+            if (hours == null || hours < 0f) {
+                Toast.makeText(this, "Masukkan jam yang valid", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 🔥 SIMPAN NILAI KE HOLDER
+            MLInputHolder.data.physicalActivity = hours
+
+            // Lanjutkan ke input ke-9
+            startActivity(Intent(this, inputAnalisa9::class.java))
         }
     }
 }

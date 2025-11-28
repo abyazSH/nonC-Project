@@ -17,16 +17,32 @@ class inputAnalisa6 : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnSelanjutnya.setOnClickListener {
+
             val input = binding.inputField.text.toString().trim().lowercase()
 
             if (input.isEmpty()) {
                 Toast.makeText(this, "Harap isi tingkat motivasi", Toast.LENGTH_SHORT).show()
-            } else if (input != "rendah" && input != "sedang" && input != "tinggi") {
-                Toast.makeText(this, "Pilihan harus: Rendah, Sedang, atau Tinggi", Toast.LENGTH_SHORT).show()
-            } else {
-                val intent = Intent(this, inputAnalisa7::class.java)
-                startActivity(intent)
+                return@setOnClickListener
             }
+
+            if (input != "rendah" && input != "sedang" && input != "tinggi") {
+                Toast.makeText(this, "Pilihan harus: Rendah, Sedang, atau Tinggi", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 🔥 KONVERSI KE ANGKA
+            val motivationValue = when (input) {
+                "rendah" -> 0f
+                "sedang" -> 1f
+                "tinggi" -> 2f
+                else -> 0f   // default fallback
+            }
+
+            // 🔥 SIMPAN KE HOLDER
+            MLInputHolder.data.motivationLevel = motivationValue
+
+            // Lanjut ke input berikutnya
+            startActivity(Intent(this, inputAnalisa7::class.java))
         }
     }
 }

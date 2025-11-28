@@ -17,16 +17,27 @@ class inputAnalisa3 : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnSelanjutnya.setOnClickListener {
-            val input = binding.inputField.text.toString().trim().uppercase()
 
-            if (input.isEmpty()) {
+            val rawInput = binding.inputField.text.toString().trim().uppercase()
+
+            if (rawInput.isEmpty()) {
                 Toast.makeText(this, "Harap isi jawaban (YES/NO)", Toast.LENGTH_SHORT).show()
-            } else if (input != "YES" && input != "NO") {
-                Toast.makeText(this, "Jawaban harus YES atau NO", Toast.LENGTH_SHORT).show()
-            } else {
-                val intent = Intent(this, inputAnalisa4::class.java)
-                startActivity(intent)
+                return@setOnClickListener
             }
+
+            if (rawInput != "YES" && rawInput != "NO") {
+                Toast.makeText(this, "Jawaban harus YES atau NO", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 🔥 KONVERSI KE NILAI ANGKA UNTUK MODEL
+            val activityValue = if (rawInput == "YES") 1f else 0f
+
+            // 🔥 SIMPAN KE HOLDER
+            MLInputHolder.data.extracurricular = activityValue
+
+            // Lanjut ke input ke-4
+            startActivity(Intent(this, inputAnalisa4::class.java))
         }
     }
 }

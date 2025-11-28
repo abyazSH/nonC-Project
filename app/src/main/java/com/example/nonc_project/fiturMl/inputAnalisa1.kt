@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityInputAnalisa1Binding
 import com.example.nonc_project.fiturMl.inputAnalisa2
 
-class inputAnalisa1 : AppCompatActivity() {  // Sesuai nama file
+class inputAnalisa1 : AppCompatActivity() {
 
     private lateinit var binding: ActivityInputAnalisa1Binding
 
@@ -21,10 +21,20 @@ class inputAnalisa1 : AppCompatActivity() {  // Sesuai nama file
 
             if (input.isEmpty()) {
                 Toast.makeText(this, "Harap isi data", Toast.LENGTH_SHORT).show()
-            } else {
-                val intent = Intent(this, inputAnalisa2::class.java)
-                startActivity(intent)
+                return@setOnClickListener
             }
+
+            val value = input.toFloatOrNull()
+            if (value == null || value < 0) {
+                Toast.makeText(this, "Masukkan angka yang valid", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 🔥 SIMPAN nilai jam belajar
+            MLInputHolder.data.hoursStudied = value
+
+            // 🔥 Lanjut ke input berikutnya
+            startActivity(Intent(this, inputAnalisa2::class.java))
         }
     }
 }
