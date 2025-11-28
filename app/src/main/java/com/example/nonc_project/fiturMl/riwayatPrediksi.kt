@@ -1,10 +1,12 @@
-package com.example.nonc_project
+package com.example.nonc_project.fiturMl
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nonc_project.HomePage
+import com.example.nonc_project.R
 import com.example.nonc_project.databinding.ActivityRiwayatPrediksiBinding
 
 class riwayatPrediksi : AppCompatActivity() {

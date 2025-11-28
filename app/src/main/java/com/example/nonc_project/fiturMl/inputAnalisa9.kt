@@ -1,5 +1,6 @@
-package com.example.nonc_project
+package com.example.nonc_project.fiturMl
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -36,7 +37,7 @@ class inputAnalisa9 : AppCompatActivity() {
     private fun setupDropdown() {
         val options = arrayOf("Ya", "Tidak", "Kadang-kadang")
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, options)
+        val adapter = ArrayAdapter(this, R.layout.simple_dropdown_item_1line, options)
 
         (binding.inputField as? AutoCompleteTextView)?.apply {
             setAdapter(adapter)

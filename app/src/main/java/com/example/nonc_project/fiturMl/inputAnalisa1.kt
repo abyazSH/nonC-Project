@@ -1,10 +1,11 @@
-package com.example.nonc_project
+package com.example.nonc_project.fiturMl
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityInputAnalisa1Binding
+import com.example.nonc_project.fiturMl.inputAnalisa2
 
 class inputAnalisa1 : AppCompatActivity() {  // Sesuai nama file
 

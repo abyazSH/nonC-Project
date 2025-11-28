@@ -1,4 +1,4 @@
-package com.example.nonc_project
+package com.example.nonc_project.authentication
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.nonc_project.HomePage
+import com.example.nonc_project.R
 import com.example.nonc_project.databinding.ActivityRegistrationBinding
 
 class Registration : AppCompatActivity() {

@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nonc_project.databinding.ActivityHomePageBinding
+import com.example.nonc_project.fiturMl.prediksiKlasifikasiPage
+import com.example.nonc_project.fiturMl.riwayatPrediksi
 
 class HomePage : AppCompatActivity() {
 

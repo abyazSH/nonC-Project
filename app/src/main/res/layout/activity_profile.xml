@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Header Card -->
+            <!-- Header -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Profile Content -->
+            <!-- CONTENT -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 android:gravity="center_horizontal"
                 android:padding="24dp">
 
-                <!-- Profile Image dengan Badge Wisuda -->
+                <!-- Profile Photo -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="120dp"
                     android:layout_height="120dp"
@@ -78,23 +78,21 @@
                     android:id="@+id/username_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="[USERNAME]"
+                    android:text="USERNAME"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:layout_marginBottom="4dp"/>
+                    android:layout_marginBottom="16dp"/>
 
-
-                <!-- Form Fields -->
+                <!-- NAMA -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@color/white"
-                    android:padding="11dp"
-                    android:layout_marginBottom="15dp">
+                    android:background="@drawable/rounded_white"
+                    android:layout_marginBottom="15dp"
+                    android:elevation="4dp">
 
-                    <!-- NAMA Field -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -102,7 +100,8 @@
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_marginBottom="8dp"/>
+                        android:layout_marginBottom="8dp"
+                        android:padding="16dp"/>
 
                     <TextView
                         android:id="@+id/nama_value"
@@ -111,20 +110,20 @@
                         android:text="..."
                         android:textSize="14sp"
                         android:textColor="#666666"
-                        android:paddingBottom="11dp"
-                        android:layout_marginBottom="16dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>
-
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="16dp"/>
                 </LinearLayout>
 
+                <!-- EMAIL -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@color/white"
-                    android:padding="16dp">
+                    android:background="@drawable/rounded_white"
+                    android:layout_marginBottom="15dp"
+                    android:elevation="4dp">
 
-                    <!-- EMAIL Field -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -132,7 +131,8 @@
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_marginBottom="8dp"/>
+                        android:layout_marginBottom="8dp"
+                        android:padding="16dp"/>
 
                     <TextView
                         android:id="@+id/email_value"
@@ -141,16 +141,30 @@
                         android:text="..."
                         android:textSize="14sp"
                         android:textColor="#666666"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
                         android:paddingBottom="16dp"/>
-
                 </LinearLayout>
+
+                <!-- LOG OUT BUTTON -->
+                <Button
+                    android:id="@+id/logoutButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="LOG OUT"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_button"
+                    android:padding="16dp"
+                    android:layout_marginBottom="20dp"/>
 
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Nav -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"

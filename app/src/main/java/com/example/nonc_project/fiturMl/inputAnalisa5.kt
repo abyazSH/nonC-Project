@@ -1,10 +1,11 @@
-package com.example.nonc_project
+package com.example.nonc_project.fiturMl
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityInputAnalisa5Binding
+import com.example.nonc_project.fiturMl.inputAnalisa6
 
 class inputAnalisa5 : AppCompatActivity() {
 

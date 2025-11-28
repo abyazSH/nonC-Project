@@ -1,4 +1,4 @@
-package com.example.nonc_project
+package com.example.nonc_project.fiturMl
 
 data class itemRiwayat(
     val tanggal: String,

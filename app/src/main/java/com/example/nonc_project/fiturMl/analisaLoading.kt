@@ -1,4 +1,4 @@
-package com.example.nonc_project
+package com.example.nonc_project.fiturMl
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityAnalisaLoadingBinding
+import com.example.nonc_project.fiturMl.hasilPrediksi
 
 class analisaLoading : AppCompatActivity() {
 

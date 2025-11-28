@@ -1,10 +1,11 @@
-package com.example.nonc_project
+package com.example.nonc_project.fiturMl
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nonc_project.HomePage
+import com.example.nonc_project.R
 import com.example.nonc_project.databinding.ActivityHasilPrediksiBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class hasilPrediksi : AppCompatActivity() {
 
