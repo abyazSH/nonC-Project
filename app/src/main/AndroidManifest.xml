@@ -84,7 +84,7 @@
 
         <!-- Hasil Prediksi -->
         <activity
-            android:name=".fiturMl.hasilPrediksi"
+            android:name=".fiturMl.HasilPrediksi"
             android:exported="false" />
 
         <!-- Riwayat Prediksi -->

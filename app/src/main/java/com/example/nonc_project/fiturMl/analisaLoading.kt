@@ -25,55 +25,49 @@ class analisaLoading : AppCompatActivity() {
         binding = ActivityAnalisaLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // immediately show current holder values (for quick debug)
         logHolderValues("onCreate - before processing")
 
         Handler(Looper.getMainLooper()).postDelayed({
             performAnalysis()
-        }, 600L) // singkat; ganti ke 2000 jika mau simulasi lebih lama
+        }, 600L)
     }
 
     private fun performAnalysis() {
-        // 1) validasi dulu semua input
+
         val missing = validateInputs()
         if (missing.isNotEmpty()) {
-            val message = "Data input tidak lengkap:\n" + missing.joinToString("\n") +
+            val message = "Data input tidak lengkap:\n" +
+                    missing.joinToString("\n") +
                     "\n\nSilakan kembali dan isi semua input."
             Log.w(TAG, message)
             Toast.makeText(this, "Input tidak lengkap, periksa kembali.", Toast.LENGTH_LONG).show()
             showAlert("Input tidak lengkap", message)
-            // kembali ke activity input terakhir supaya user perbaiki
             finish()
             return
         }
 
-        // 2) panggil model di try/catch
         try {
             val input = MLInputHolder.data
-            val model = MlModel(this) // bisa melempar exception saat load
-            Log.d(TAG, "Memanggil predict() dengan data: $input")
-            val hasilPrediksi = model.predict(input)
+            val model = MlModel(this)
 
-            // kirim ke hasilPrediksi activity
-            val intent = Intent(this, hasilPrediksi::class.java)
-            intent.putExtra("prediksi", hasilPrediksi)
+            Log.d(TAG, "Memanggil predict() dengan data: $input")
+
+            // 🔥 hasil prediksi dari model (String)
+            val hasil = model.predict(input)
+
+            // 🔥 buka Activity HasilPrediksi
+            val intent = Intent(this, HasilPrediksi::class.java)
+            intent.putExtra("prediksi", hasil)
             startActivity(intent)
             finish()
+
         } catch (e: Exception) {
-            // tangkap semuanya, tampilkan stacktrace agar mudah debug
             Log.e(TAG, "Error saat analisa: ", e)
             val sw = StringWriter()
             e.printStackTrace(PrintWriter(sw))
-            val errText = sw.toString()
 
-            // Tampilkan dialog dengan pesan singkat + tombol "Copy" / "OK"
-            showAlert("Terjadi kesalahan saat analisa", e.message ?: "Unknown error\n\n$errText")
-
-            // juga tunjukkan Toast supaya cepat kelihatan di device
+            showAlert("Terjadi kesalahan saat analisa", e.message ?: "Unknown error")
             Toast.makeText(this, "Analisa gagal: ${e.message}", Toast.LENGTH_LONG).show()
-
-            // jangan langsung finish() agar user melihat pesan; kalau mau tutup:
-            // finish()
         }
     }
 
@@ -83,13 +77,15 @@ class analisaLoading : AppCompatActivity() {
 
         if (d.hoursStudied == null) missing.add("Hours_Studied")
         if (d.attendance == null) missing.add("Attendance")
-        if (d.extracurricular == null) missing.add("Extracurricular_Activities")
         if (d.sleepHours == null) missing.add("Sleep_Hours")
         if (d.previousScores == null) missing.add("Previous_Scores")
-        if (d.motivationLevel == null) missing.add("Motivation_Level")
         if (d.tutoringSessions == null) missing.add("Tutoring_Sessions")
         if (d.physicalActivity == null) missing.add("Physical_Activity")
-        if (d.learningDisabilities == null) missing.add("Learning_Disabilities")
+
+        // === FIELD STRING BARU ===
+        if (d.extracurricularString == null) missing.add("Extracurricular_Activities (YES/NO)")
+        if (d.motivationString == null) missing.add("Motivation_Level (rendah/sedang/tinggi)")
+        if (d.learningDisabilitiesString == null) missing.add("Learning_Disabilities (Ya/Tidak/Kadang)")
 
         return missing
     }
@@ -104,9 +100,18 @@ class analisaLoading : AppCompatActivity() {
 
     private fun logHolderValues(tagSuffix: String) {
         val d = MLInputHolder.data
-        Log.d(TAG, "$tagSuffix -> MLInputHolder: hoursStudied=${d.hoursStudied}, attendance=${d.attendance}, " +
-                "extracurricular=${d.extracurricular}, sleepHours=${d.sleepHours}, previousScores=${d.previousScores}, " +
-                "motivationLevel=${d.motivationLevel}, tutoringSessions=${d.tutoringSessions}, physicalActivity=${d.physicalActivity}, " +
-                "learningDisabilities=${d.learningDisabilities}")
+        Log.d(
+            TAG,
+            "$tagSuffix -> MLInputHolder:" +
+                    " hoursStudied=${d.hoursStudied}," +
+                    " attendance=${d.attendance}," +
+                    " sleepHours=${d.sleepHours}," +
+                    " prevScores=${d.previousScores}," +
+                    " motivationString=${d.motivationString}," +
+                    " extracurricularString=${d.extracurricularString}," +
+                    " learningDisabilitiesString=${d.learningDisabilitiesString}," +
+                    " tutoringSessions=${d.tutoringSessions}," +
+                    " physicalActivity=${d.physicalActivity}"
+        )
     }
 }

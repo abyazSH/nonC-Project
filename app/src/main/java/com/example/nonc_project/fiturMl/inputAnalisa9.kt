@@ -6,7 +6,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.nonc_project.R          // ⬅️ INI YANG BENAR
+import com.example.nonc_project.R
 import com.example.nonc_project.databinding.ActivityInputAnalisa9Binding
 
 class inputAnalisa9 : AppCompatActivity() {
@@ -28,14 +28,8 @@ class inputAnalisa9 : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val encodedValue = when (input) {
-                "Ya" -> 1.0f
-                "Tidak" -> 0.0f
-                "Kadang-kadang" -> 0.5f
-                else -> 0.0f
-            }
-
-            MLInputHolder.data.learningDisabilities = encodedValue
+            // 🔥 SIMPAN STRING SESUAI ONNX
+            MLInputHolder.data.learningDisabilitiesString = input
 
             startActivity(Intent(this, analisaLoading::class.java))
             finish()

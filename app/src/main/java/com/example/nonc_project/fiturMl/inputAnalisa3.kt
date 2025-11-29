@@ -30,11 +30,8 @@ class inputAnalisa3 : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // 🔥 KONVERSI KE NILAI ANGKA UNTUK MODEL
-            val activityValue = if (rawInput == "YES") 1f else 0f
-
-            // 🔥 SIMPAN KE HOLDER
-            MLInputHolder.data.extracurricular = activityValue
+            // 🔥 SIMPAN SEBAGAI STRING SESUAI ONNX
+            MLInputHolder.data.extracurricularString = rawInput
 
             // Lanjut ke input ke-4
             startActivity(Intent(this, inputAnalisa4::class.java))

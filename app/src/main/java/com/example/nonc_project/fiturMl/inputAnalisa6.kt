@@ -30,18 +30,9 @@ class inputAnalisa6 : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // 🔥 KONVERSI KE ANGKA
-            val motivationValue = when (input) {
-                "rendah" -> 0f
-                "sedang" -> 1f
-                "tinggi" -> 2f
-                else -> 0f   // default fallback
-            }
+            // 🔥 SIMPAN STRING ASAP SESUAI ONNX
+            MLInputHolder.data.motivationString = input
 
-            // 🔥 SIMPAN KE HOLDER
-            MLInputHolder.data.motivationLevel = motivationValue
-
-            // Lanjut ke input berikutnya
             startActivity(Intent(this, inputAnalisa7::class.java))
         }
     }
