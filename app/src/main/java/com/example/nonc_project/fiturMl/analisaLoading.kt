@@ -1,6 +1,7 @@
 package com.example.nonc_project.fiturMl
 
 import android.app.AlertDialog
+import com.example.nonc_project.ml.MlModel
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -25,23 +26,33 @@ class analisaLoading : AppCompatActivity() {
         binding = ActivityAnalisaLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        logHolderValues("onCreate - before processing")
+        logValues("onCreate - before processing")
 
         Handler(Looper.getMainLooper()).postDelayed({
             performAnalysis()
-        }, 600L)
+        }, 1200)
     }
 
     private fun performAnalysis() {
 
-        val missing = validateInputs()
-        if (missing.isNotEmpty()) {
-            val message = "Data input tidak lengkap:\n" +
-                    missing.joinToString("\n") +
-                    "\n\nSilakan kembali dan isi semua input."
+        val missingFields = validateInputs()
+
+        if (missingFields.isNotEmpty()) {
+
+            val message = """
+                ❌ Data input tidak lengkap:
+                
+                ${missingFields.joinToString("\n")}
+
+                Silakan kembali dan lengkapi input yang belum terisi.
+            """.trimIndent()
+
             Log.w(TAG, message)
-            Toast.makeText(this, "Input tidak lengkap, periksa kembali.", Toast.LENGTH_LONG).show()
-            showAlert("Input tidak lengkap", message)
+
+            showAlert("Input Belum Lengkap", message)
+
+            Toast.makeText(this, "Silakan isi semua input.", Toast.LENGTH_LONG).show()
+
             finish()
             return
         }
@@ -50,68 +61,69 @@ class analisaLoading : AppCompatActivity() {
             val input = MLInputHolder.data
             val model = MlModel(this)
 
-            Log.d(TAG, "Memanggil predict() dengan data: $input")
+            Log.d(TAG, "Predict() dipanggil dengan data: $input")
 
-            // 🔥 hasil prediksi dari model (String)
-            val hasil = model.predict(input)
+            val result = model.predict(input)
 
-            // 🔥 buka Activity HasilPrediksi
-            val intent = Intent(this, HasilPrediksi::class.java)
-            intent.putExtra("prediksi", hasil)
+            val intent = Intent(this, HasilPrediksi::class.java).apply {
+                putExtra("prediksi", result)
+            }
+
             startActivity(intent)
             finish()
 
         } catch (e: Exception) {
-            Log.e(TAG, "Error saat analisa: ", e)
-            val sw = StringWriter()
-            e.printStackTrace(PrintWriter(sw))
 
-            showAlert("Terjadi kesalahan saat analisa", e.message ?: "Unknown error")
-            Toast.makeText(this, "Analisa gagal: ${e.message}", Toast.LENGTH_LONG).show()
+            val writer = StringWriter()
+            e.printStackTrace(PrintWriter(writer))
+
+            Log.e(TAG, "Error saat analisa:\n${writer}", e)
+
+            showAlert("Kesalahan Analisa", "Terjadi kesalahan saat memproses prediksi.")
+
+            Toast.makeText(this, "Gagal melakukan analisa.", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun validateInputs(): List<String> {
-        val missing = mutableListOf<String>()
         val d = MLInputHolder.data
-
-        if (d.hoursStudied == null) missing.add("Hours_Studied")
-        if (d.attendance == null) missing.add("Attendance")
-        if (d.sleepHours == null) missing.add("Sleep_Hours")
-        if (d.previousScores == null) missing.add("Previous_Scores")
-        if (d.tutoringSessions == null) missing.add("Tutoring_Sessions")
-        if (d.physicalActivity == null) missing.add("Physical_Activity")
-
-        // === FIELD STRING BARU ===
-        if (d.extracurricularString == null) missing.add("Extracurricular_Activities (YES/NO)")
-        if (d.motivationString == null) missing.add("Motivation_Level (rendah/sedang/tinggi)")
-        if (d.learningDisabilitiesString == null) missing.add("Learning_Disabilities (Ya/Tidak/Kadang)")
-
-        return missing
+        return buildList {
+            if (d.hoursStudied == null) add("Hours Studied")
+            if (d.attendance == null) add("Attendance")
+            if (d.sleepHours == null) add("Sleep Hours")
+            if (d.previousScores == null) add("Previous Scores")
+            if (d.tutoringSessions == null) add("Tutoring Sessions")
+            if (d.physicalActivity == null) add("Physical Activity")
+            if (d.extracurricular == null) add("Extracurricular Activities")
+            if (d.motivation == null) add("Motivation Level")
+            if (d.learningDisabilities == null) add("Learning Disabilities")
+        }
     }
 
     private fun showAlert(title: String, message: String) {
         AlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(message)
+            .setCancelable(false)
             .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
             .show()
     }
 
-    private fun logHolderValues(tagSuffix: String) {
+    private fun logValues(where: String) {
         val d = MLInputHolder.data
         Log.d(
-            TAG,
-            "$tagSuffix -> MLInputHolder:" +
-                    " hoursStudied=${d.hoursStudied}," +
-                    " attendance=${d.attendance}," +
-                    " sleepHours=${d.sleepHours}," +
-                    " prevScores=${d.previousScores}," +
-                    " motivationString=${d.motivationString}," +
-                    " extracurricularString=${d.extracurricularString}," +
-                    " learningDisabilitiesString=${d.learningDisabilitiesString}," +
-                    " tutoringSessions=${d.tutoringSessions}," +
-                    " physicalActivity=${d.physicalActivity}"
+            TAG, """
+            $where
+            hoursStudied=${d.hoursStudied},
+            attendance=${d.attendance},
+            sleepHours=${d.sleepHours},
+            prevScores=${d.previousScores},
+            motivation=${d.motivation},
+            extracurricular=${d.extracurricular},
+            learningDisabilities=${d.learningDisabilities},
+            tutoringSessions=${d.tutoringSessions},
+            physicalActivity=${d.physicalActivity}
+        """.trimIndent()
         )
     }
 }

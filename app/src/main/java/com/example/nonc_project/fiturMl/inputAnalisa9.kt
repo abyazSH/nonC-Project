@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.nonc_project.R
 import com.example.nonc_project.databinding.ActivityInputAnalisa9Binding
 
 class inputAnalisa9 : AppCompatActivity() {
@@ -28,8 +27,14 @@ class inputAnalisa9 : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // 🔥 SIMPAN STRING SESUAI ONNX
-            MLInputHolder.data.learningDisabilitiesString = input
+            val validOps = listOf("Ya", "Tidak", "Kadang-kadang")
+            if (!validOps.contains(input)) {
+                Toast.makeText(this, "Pilihan tidak valid", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // ✔️ Simpan jawaban dengan immutable copy
+            MLInputHolder.data = MLInputHolder.data.copy(learningDisabilities = input)
 
             startActivity(Intent(this, analisaLoading::class.java))
             finish()
@@ -38,7 +43,6 @@ class inputAnalisa9 : AppCompatActivity() {
 
     private fun setupDropdown() {
         val options = arrayOf("Ya", "Tidak", "Kadang-kadang")
-
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, options)
 
         (binding.inputField as? AutoCompleteTextView)?.apply {

@@ -1,17 +1,19 @@
 package com.example.nonc_project.fiturMl
 
-data class Mlinput(
-    var hoursStudied: Float? = null,
-    var attendance: Float? = null,
-    var extracurricularString: String? = null,      // YES / NO
-    var sleepHours: Float? = null,
-    var previousScores: Float? = null,
-    var motivationString: String? = null,           // rendah / sedang / tinggi
-    var tutoringSessions: Float? = null,
-    var physicalActivity: Float? = null,
-    var learningDisabilitiesString: String? = null  // Ya / Tidak / Kadang-kadang
-)
-
 object MLInputHolder {
-    val data = Mlinput()
+
+    data class MlInput(
+        val hoursStudied: Float? = null,
+        val attendance: Float? = null,
+        val sleepHours: Float? = null,
+        val previousScores: Float? = null,
+        val tutoringSessions: Float? = null,
+        val physicalActivity: Float? = null,
+        val extracurricular: String? = null,
+        val motivation: String? = null,
+        val learningDisabilities: String? = null
+    )
+
+
+    var data: MlInput = MlInput()
 }

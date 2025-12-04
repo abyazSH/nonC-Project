@@ -16,20 +16,27 @@ class HasilPrediksi : AppCompatActivity() {
         binding = ActivityHasilPrediksiBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 🔥 Ambil hasil prediksi dari ML
         val prediksi = intent.getStringExtra("prediksi") ?: "Tidak diketahui"
 
         binding.statusBadge.text = prediksi
 
-        binding.resultDescription.text = when (prediksi) {
-            "A" -> "Kamu sangat luar biasa! Pertahankan performamu 👍"
-            "AB" -> "Kamu sudah bagus, masih ada ruang untuk lebih baik!"
-            "B" -> "Cukup stabil, tetap fokus dan tingkatkan lagi."
-            "C" -> "Perlu meningkatkan pola belajar dan konsistensi."
-            "F" -> "Perlu perhatian! Mari perbaiki jadwal belajar dan kebiasaanmu."
-            else -> "Data tidak valid atau prediksi gagal."
+        // 🔥 Set warna badge berdasarkan hasil prediksi
+        when (prediksi.uppercase()) {
+            "A" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_green)
+            "B" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_blue)
+            "C" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_yellow)
+            else -> binding.statusBadge.setBackgroundResource(R.drawable.badge_red)
         }
 
+        // 🔥 Description (lebih logis dan motivasional)
+        binding.resultDescription.text = when (prediksi) {
+            "A" -> "🔥 Kamu berada pada kategori sangat baik! Pertahankan pola belajar, manajemen waktu, dan konsistensi yang sudah bagus."
+            "B" -> "👍 Cukup baik! Kamu berada di jalur yang benar, tapi masih ada ruang untuk berkembang. Tingkatkan rutinitas belajarmu."
+            "C" -> "⚠ Kamu memerlukan peningkatan dalam belajar. Cobalah buat jadwal belajar, tidur cukup, dan minta bantuan tutor bila perlu."
+            else -> "❌ Prediksi gagal atau data tidak valid."
+        }
+
+        // Bottom Navigation
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {

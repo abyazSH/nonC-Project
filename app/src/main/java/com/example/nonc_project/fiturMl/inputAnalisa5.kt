@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityInputAnalisa5Binding
-import com.example.nonc_project.fiturMl.inputAnalisa6
 
 class inputAnalisa5 : AppCompatActivity() {
 
@@ -17,25 +16,42 @@ class inputAnalisa5 : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnSelanjutnya.setOnClickListener {
-
-            val input = binding.inputField.text.toString().trim()
-
-            if (input.isEmpty()) {
-                Toast.makeText(this, "Harap isi nilai tahun lalu", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val score = input.toFloatOrNull()
-            if (score == null || score < 0 || score > 100) {
-                Toast.makeText(this, "Masukkan nilai valid (0-100)", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            // 🔥 SIMPAN NILAI KE HOLDER
-            MLInputHolder.data.previousScores = score
-
-            // Lanjut ke input berikutnya
-            startActivity(Intent(this, inputAnalisa6::class.java))
+            handleInput()
         }
+    }
+
+    private fun handleInput() {
+        val input = binding.inputField.text.toString().trim()
+
+        when {
+            input.isEmpty() -> {
+                showToast("Harap isi nilai tahun lalu")
+            }
+
+            input.toFloatOrNull() == null -> {
+                showToast("Masukkan angka yang valid")
+            }
+
+            input.toFloat() < 0 || input.toFloat() > 100 -> {
+                showToast("Masukkan nilai valid (0–100)")
+            }
+
+            else -> {
+                // Simpan data menggunakan copy agar variabel lain tidak ter-reset
+                MLInputHolder.data = MLInputHolder.data.copy(
+                    previousScores = input.toFloat()
+                )
+
+                goNext()
+            }
+        }
+    }
+
+    private fun goNext() {
+        startActivity(Intent(this, inputAnalisa6::class.java))
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

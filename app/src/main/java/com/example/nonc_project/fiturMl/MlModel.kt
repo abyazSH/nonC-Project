@@ -1,9 +1,9 @@
-package com.example.nonc_project.fiturMl
+package com.example.nonc_project.ml
 
 import android.content.Context
-import ai.onnxruntime.OrtEnvironment
-import ai.onnxruntime.OnnxTensor
-import ai.onnxruntime.OrtSession
+import android.util.Log
+import ai.onnxruntime.*
+import com.example.nonc_project.fiturMl.MLInputHolder
 import java.io.File
 import java.io.FileOutputStream
 
@@ -12,90 +12,99 @@ class MlModel(private val context: Context) {
     private val env: OrtEnvironment = OrtEnvironment.getEnvironment()
     private val session: OrtSession
 
-    // mapping index -> label (pastikan urutan sama seperti saat training)
-    private val labels = arrayOf("A", "AB", "B", "C", "F")
+    private val labelByIndex = arrayOf("Kurang baik", "Cukup", "Baik")
+
+    private val codeByLabel = mapOf(
+        "Kurang baik" to "C",
+        "Cukup" to "B",
+        "Baik" to "A"
+    )
 
     init {
-        val modelFile = copyAssetToCache("student_success.onnx")
+        val modelFile = copyAssetToCache("student_svc_model.onnx")
         session = env.createSession(modelFile.absolutePath)
     }
 
-    private fun copyAssetToCache(name: String): File {
-        val out = File(context.cacheDir, name)
-        if (!out.exists()) {
-            context.assets.open(name).use { input ->
-                FileOutputStream(out).use { output ->
-                    input.copyTo(output)
-                }
+    private fun copyAssetToCache(assetName: String): File {
+        val file = File(context.cacheDir, assetName)
+        if (!file.exists()) {
+            context.assets.open(assetName).use { input ->
+                FileOutputStream(file).use { output -> input.copyTo(output) }
             }
         }
-        return out
+        return file
     }
 
-    /**
-     * Predict: returns label string (e.g. "B").
-     * Safe: handles nulls by using defaults and closes tensors/results to avoid native leaks.
-     */
-    fun predict(input: Mlinput): String {
-        // create map of OnnxTensor
-        val tensorMap = mutableMapOf<String, OnnxTensor>()
+    fun predict(input: MLInputHolder.MlInput): String {
+        val tensors = mutableMapOf<String, OnnxTensor>()
 
         try {
-            // --- STRING inputs (use defaults if null) ---
-            val extracur = input.extracurricularString ?: "NO"
-            tensorMap["Extracurricular_Activities"] = OnnxTensor.createTensor(env, arrayOf(extracur))
 
-            val motiv = input.motivationString ?: "rendah"
-            tensorMap["Motivation_Level"] = OnnxTensor.createTensor(env, arrayOf(motiv))
-
-            val learning = input.learningDisabilitiesString ?: "Tidak"
-            tensorMap["Learning_Disabilities"] = OnnxTensor.createTensor(env, arrayOf(learning))
-
-            // --- FLOAT inputs (shape [1]) ---
-            tensorMap["Hours_Studied"] = OnnxTensor.createTensor(env, floatArrayOf(input.hoursStudied ?: 0f))
-            tensorMap["Attendance"] = OnnxTensor.createTensor(env, floatArrayOf(input.attendance ?: 0f))
-            tensorMap["Sleep_Hours"] = OnnxTensor.createTensor(env, floatArrayOf(input.sleepHours ?: 0f))
-            tensorMap["Previous_Scores"] = OnnxTensor.createTensor(env, floatArrayOf(input.previousScores ?: 0f))
-            tensorMap["Tutoring_Sessions"] = OnnxTensor.createTensor(env, floatArrayOf(input.tutoringSessions ?: 0f))
-            tensorMap["Physical_Activity"] = OnnxTensor.createTensor(env, floatArrayOf(input.physicalActivity ?: 0f))
-
-            // run model (OrtSession.Result is AutoCloseable)
-            session.run(tensorMap).use { results ->
-                // outputs[0] is output_label (int64) [None]
-                val out0 = results[0].value
-
-                // handle multiple possible shapes returned by onnxruntime java binding
-                val predictedIndex: Int = when (out0) {
-                    is LongArray -> out0[0].toInt()
-                    is Array<*> -> {
-                        // could be Array<Long> or Array<LongArray>
-                        val first = out0[0]
-                        when (first) {
-                            is Long -> (first as Long).toInt()
-                            is LongArray -> (first as LongArray)[0].toInt()
-                            else -> {
-                                // fallback: try to parse toInt
-                                first.toString().toDoubleOrNull()?.toInt() ?: -1
-                            }
-                        }
-                    }
-                    is Number -> out0.toInt()
-                    else -> {
-                        // fallback
-                        try {
-                            out0.toString().toDouble().toInt()
-                        } catch (e: Exception) {
-                            -1
-                        }
-                    }
-                }
-
-                // map to label text
-                return if (predictedIndex in labels.indices) labels[predictedIndex] else "Unknown"
+            // ================== Normalisasi String ==================
+            val extracurricularForModel = when (input.extracurricular?.lowercase()?.trim()) {
+                "ya", "yes", "y" -> "YES"
+                "tidak", "no", "n" -> "NO"
+                else -> "NO"
             }
+
+            val motivationForModel = when (input.motivation?.lowercase()?.trim()) {
+                "tinggi", "high" -> "tinggi"
+                "rendah", "low" -> "rendah"
+                else -> "sedang"
+            }
+
+            val learningForModel = when (input.learningDisabilities?.lowercase()?.trim()) {
+                "ya", "yes", "y" -> "Ya"
+                "kadang", "sometimes" -> "Kadang-kadang"
+                else -> "Tidak"
+            }
+
+            // ================== Numeric Inputs (2D) ==================
+            tensors["Hours_Studied"] = OnnxTensor.createTensor(env, arrayOf(floatArrayOf(input.hoursStudied ?: 0f)))
+            tensors["Attendance"] = OnnxTensor.createTensor(env, arrayOf(floatArrayOf(input.attendance ?: 0f)))
+            tensors["Sleep_Hours"] = OnnxTensor.createTensor(env, arrayOf(floatArrayOf(input.sleepHours ?: 0f)))
+            tensors["Previous_Scores"] = OnnxTensor.createTensor(env, arrayOf(floatArrayOf(input.previousScores ?: 0f)))
+            tensors["Tutoring_Sessions"] = OnnxTensor.createTensor(env, arrayOf(floatArrayOf(input.tutoringSessions ?: 0f)))
+            tensors["Physical_Activity"] = OnnxTensor.createTensor(env, arrayOf(arrayOf(input.physicalActivity.toString())))
+
+            // ================== String Inputs (2D) ==================
+            tensors["Extracurricular_Activities"] =
+                OnnxTensor.createTensor(env, arrayOf(arrayOf(extracurricularForModel)))
+
+            tensors["Motivation_Level"] =
+                OnnxTensor.createTensor(env, arrayOf(arrayOf(motivationForModel)))
+
+            tensors["Learning_Disabilities"] =
+                OnnxTensor.createTensor(env, arrayOf(arrayOf(learningForModel)))
+
+
+            // ================== Run Model ==================
+            session.run(tensors).use { result ->
+
+                val output = result[0].value
+
+                return when (output) {
+
+                    is LongArray -> {
+                        val idx = output.firstOrNull()?.toInt() ?: -1
+                        val label = labelByIndex.getOrNull(idx) ?: return "?"
+                        codeByLabel[label] ?: label
+                    }
+
+                    is Array<*> -> {
+                        val first = output.firstOrNull()
+                        if (first is String) codeByLabel[first] ?: first else "?"
+                    }
+
+                    else -> output.toString()
+                }
+            }
+
+        } catch (e: Exception) {
+            Log.e("ONNX_ERROR", "Prediction Failed → ${e.message}")
+            return "?"
         } finally {
-            // always close created tensors to prevent native memory leak
-            tensorMap.values.forEach { try { it.close() } catch (_: Exception) {} }
+            tensors.values.forEach { it.close() }
         }
     }
 }

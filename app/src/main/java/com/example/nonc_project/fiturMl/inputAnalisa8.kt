@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityInputAnalisa8Binding
-import com.example.nonc_project.fiturMl.inputAnalisa9
 
 class inputAnalisa8 : AppCompatActivity() {
 
@@ -30,10 +29,9 @@ class inputAnalisa8 : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // 🔥 SIMPAN NILAI KE HOLDER
-            MLInputHolder.data.physicalActivity = hours
+            // SIMPAN NILAI DENGAN IMMUTABLE COPY
+            MLInputHolder.data = MLInputHolder.data.copy(physicalActivity = hours)
 
-            // Lanjutkan ke input ke-9
             startActivity(Intent(this, inputAnalisa9::class.java))
         }
     }

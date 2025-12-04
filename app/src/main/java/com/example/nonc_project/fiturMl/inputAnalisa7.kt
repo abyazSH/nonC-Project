@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityInputAnalisa7Binding
-import com.example.nonc_project.fiturMl.inputAnalisa8
 
 class inputAnalisa7 : AppCompatActivity() {
 
@@ -18,23 +17,22 @@ class inputAnalisa7 : AppCompatActivity() {
 
         binding.btnSelanjutnya.setOnClickListener {
 
-            val input = binding.inputField.text.toString()
+            val raw = binding.inputField.text.toString().trim()
 
-            if (input.isEmpty()) {
+            if (raw.isEmpty()) {
                 Toast.makeText(this, "Harap isi jam bimbingan belajar per minggu", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val hours = input.toFloatOrNull()
-            if (hours == null || hours < 0f) {
-                Toast.makeText(this, "Masukkan jam yang valid", Toast.LENGTH_SHORT).show()
+            val hours = raw.toFloatOrNull()
+            if (hours == null || hours < 0 || hours > 50) {
+                Toast.makeText(this, "Masukkan jam valid (0–50 jam/minggu)", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // 🔥 SIMPAN NILAI KE HOLDER
-            MLInputHolder.data.tutoringSessions = hours
+            // Simpan data dengan format baru immutable
+            MLInputHolder.data = MLInputHolder.data.copy(tutoringSessions = hours)
 
-            // Lanjut ke input berikutnya
             startActivity(Intent(this, inputAnalisa8::class.java))
         }
     }

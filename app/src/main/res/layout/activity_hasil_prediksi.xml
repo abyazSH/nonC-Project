@@ -96,15 +96,21 @@
                 android:text="LULUS"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
+                android:background="@drawable/badge_default"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:gravity="center"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Description Text -->
+            <!-- Description -->
             <TextView
                 android:id="@+id/result_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Selamat! Hasil prediksi menunjukkan performa akademikmu berada pada tingkat yang baik. Pertahankan kebiasaan belajarmu dengan jadwal yang teratur, usahakan tetap tidur cukup antara 6-8 jam setiap malam, dan luangkan waktu untuk berolahraga ringan agar tubuh tetap bugar. Terus tingkatkan motivasi belajar dengan menetapkan target mingguan, aktif berdiskusi di kelas, serta jaga keseimbangan antara waktu belajar dan istirahat. Pola hidup yang sehat dan disiplin akan membantu mempertahankan bahkan meningkatkan prestasimu di masa depan."
+                android:text="Contoh teks deskripsi..."
                 android:textSize="14sp"
                 android:textColor="#666666"
                 android:lineSpacingExtra="4dp"/>
