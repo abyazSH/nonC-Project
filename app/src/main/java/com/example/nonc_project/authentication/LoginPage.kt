@@ -23,7 +23,6 @@ class LoginPage : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityLoginPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -50,14 +49,13 @@ class LoginPage : AppCompatActivity() {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    @Deprecated("Deprecated in Java")
+    @Deprecated("Deprecated")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
             val task: Task<GoogleSignInAccount> =
                 GoogleSignIn.getSignedInAccountFromIntent(data)
-
             handleSignInResult(task)
         }
     }
@@ -65,17 +63,18 @@ class LoginPage : AppCompatActivity() {
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
         if (task.isSuccessful) {
             val account = task.result
-            val email = account?.email
-            val name = account?.displayName
+            val email = account?.email ?: "-"
+            val name = account?.displayName ?: "-"
 
             Log.d("GOOGLE_LOGIN", "Success: $email - $name")
 
-            // Masuk ke halaman Home
             val intent = Intent(this, HomePage::class.java)
+            intent.putExtra("email", email)
+            intent.putExtra("name", name)
             startActivity(intent)
             finish()
         } else {
-            Log.e("GOOGLE_LOGIN", "Failed: ${task.exception}")
+            Log.e("GOOGLE_LOGIN", "Failed", task.exception)
         }
     }
 }

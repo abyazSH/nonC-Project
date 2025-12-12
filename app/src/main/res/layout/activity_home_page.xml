@@ -48,11 +48,10 @@
   </LinearLayout>
 
   <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recycler_view"
+      android:id="@+id/recyclerView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_below="@id/header_container"
-      android:layout_above="@id/bottom_navigation"
       android:padding="16dp"
       android:clipToPadding="false"/>
 
@@ -64,5 +63,4 @@
       android:background="@color/accent"
       app:itemIconTint="@color/black"
       app:menu="@menu/bottom_nav_menu"/>
-
 </RelativeLayout>
