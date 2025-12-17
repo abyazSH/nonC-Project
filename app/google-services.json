@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "67144640894",
+    "project_id": "noncproject",
+    "storage_bucket": "noncproject.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67144640894:android:812613ceaa29c6b8d02b2f",
+        "android_client_info": {
+          "package_name": "com.example.nonc_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "67144640894-6qsldgqrtbvjbjnst91rhbb6c9anu5v7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nonc_project",
+            "certificate_hash": "91fc83b879c13118acb0189a26490c8052075b37"
+          }
+        },
+        {
+          "client_id": "67144640894-m5kf38u4pc69fa85645eeuaob9g7aadq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCbQJG6KGaBeSlGNry_Nyq3oWFyl26tuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "67144640894-m5kf38u4pc69fa85645eeuaob9g7aadq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

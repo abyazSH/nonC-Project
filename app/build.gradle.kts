@@ -2,9 +2,18 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("C:\\AndroidStudio\\MyKeyStone\\MyKeyStore")
+            storePassword = "140122"
+            keyAlias = "KeyNonC"
+            keyPassword = "140122"
+        }
+    }
     namespace = "com.example.nonc_project"
     compileSdk = 36
 
@@ -16,19 +25,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig = signingConfigs.getByName("debug")
     }
 
-    // 🔐 SIGNING CONFIG RELEASE
-    signingConfigs {
-        create("release") {
-            storeFile = file(
-                "C:/AndroidStudio/keyProject.jks"
-            )
-            storePassword = "140122"
-            keyAlias = "NonC"
-            keyPassword = "140122"
-        }
-    }
 
     buildTypes {
         release {
@@ -37,7 +36,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -62,6 +60,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.database)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -76,4 +75,10 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.16.0")
     implementation("com.airbnb.android:lottie:6.3.0")
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.20.0")
+
+    implementation (platform("com.google.firebase:firebase-bom:32.4.1"))
+    implementation ("com.google.firebase:firebase-auth-ktx" )
+    implementation ("com.google.firebase:firebase-analytics-ktx")
+
+
 }
