@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.nonc_project.HomePage
 import com.example.nonc_project.R
 
 class SplashScreen : AppCompatActivity() {
@@ -23,7 +24,7 @@ class SplashScreen : AppCompatActivity() {
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, LoginPage::class.java)
+            val intent = Intent(this, HomePage::class.java)
             startActivity(intent)
             finish()
         }, 2500)

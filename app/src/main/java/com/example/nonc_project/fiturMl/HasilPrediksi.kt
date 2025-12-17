@@ -22,17 +22,17 @@ class HasilPrediksi : AppCompatActivity() {
 
         // 🔥 Set warna badge berdasarkan hasil prediksi
         when (prediksi.uppercase()) {
-            "A" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_green)
-            "B" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_blue)
-            "C" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_yellow)
+            "Baik" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_green)
+            "Cukup" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_blue)
+            "Kurang Baik" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_yellow)
             else -> binding.statusBadge.setBackgroundResource(R.drawable.badge_red)
         }
 
         // 🔥 Description (lebih logis dan motivasional)
         binding.resultDescription.text = when (prediksi) {
-            "A" -> "🔥 Kamu berada pada kategori sangat baik! Pertahankan pola belajar, manajemen waktu, dan konsistensi yang sudah bagus."
-            "B" -> "👍 Cukup baik! Kamu berada di jalur yang benar, tapi masih ada ruang untuk berkembang. Tingkatkan rutinitas belajarmu."
-            "C" -> "⚠ Kamu memerlukan peningkatan dalam belajar. Cobalah buat jadwal belajar, tidur cukup, dan minta bantuan tutor bila perlu."
+            "Baik" -> "🔥 Kamu berada pada kategori sangat baik! Pertahankan pola belajar, manajemen waktu, dan konsistensi yang sudah bagus."
+            "Cukup" -> "👍 Cukup baik! Kamu berada di jalur yang benar, tapi masih ada ruang untuk berkembang. Tingkatkan rutinitas belajarmu."
+            "Kurang Baik" -> "⚠ Kamu memerlukan peningkatan dalam belajar. Cobalah buat jadwal belajar, tidur cukup, dan minta bantuan tutor bila perlu."
             else -> "❌ Prediksi gagal atau data tidak valid."
         }
 

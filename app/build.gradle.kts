@@ -18,6 +18,18 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // 🔐 SIGNING CONFIG RELEASE
+    signingConfigs {
+        create("release") {
+            storeFile = file(
+                "C:/AndroidStudio/keyProject.jks"
+            )
+            storePassword = "140122"
+            keyAlias = "NonC"
+            keyPassword = "140122"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -25,16 +37,20 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures{
+
+    buildFeatures {
         viewBinding = true
     }
 }
@@ -46,10 +62,12 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    //Tambahan
+
+    // Tambahan
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.cardview:cardview:1.0.0")
@@ -58,6 +76,4 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.16.0")
     implementation("com.airbnb.android:lottie:6.3.0")
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.20.0")
-
-
 }

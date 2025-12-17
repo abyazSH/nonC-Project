@@ -15,9 +15,9 @@ class MlModel(private val context: Context) {
     private val labelByIndex = arrayOf("Kurang baik", "Cukup", "Baik")
 
     private val codeByLabel = mapOf(
-        "Kurang baik" to "C",
-        "Cukup" to "B",
-        "Baik" to "A"
+        "Kurang baik" to "Baik",
+        "Cukup" to "Cukup",
+        "Baik" to "Kurang Baik"
     )
 
     init {

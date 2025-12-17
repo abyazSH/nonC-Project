@@ -92,9 +92,9 @@
             android:name=".fiturMl.riwayatPrediksi"
             android:exported="false" />
 
-        <activity
-            android:name=".fiturMl.itemRiwayat"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".fiturMl.itemRiwayat"-->
+<!--            android:exported="false" />-->
 
     </application>
 
