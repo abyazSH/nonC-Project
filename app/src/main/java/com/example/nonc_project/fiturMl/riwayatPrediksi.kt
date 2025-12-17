@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nonc_project.HomePage
 import com.example.nonc_project.R
 import com.example.nonc_project.databinding.ActivityRiwayatPrediksiBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class riwayatPrediksi : AppCompatActivity() {
 
@@ -18,54 +20,69 @@ class riwayatPrediksi : AppCompatActivity() {
         binding = ActivityRiwayatPrediksiBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set username
-        binding.usernameHeader.text = "Halo [username]"
+        binding.usernameHeader.text = "Halo Pengguna"
 
         setupRecyclerView()
         setupBottomNavigation()
-
-        // View All click
-        binding.viewAll.setOnClickListener {
-            Toast.makeText(this, "View All clicked", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun setupRecyclerView() {
         binding.recyclerRiwayat.layoutManager = LinearLayoutManager(this)
 
-        // Data dummy riwayat (6 items)
-        val items = listOf(
-            itemRiwayat("Tanggal ****", "Lulus"),
-            itemRiwayat("Tanggal ****", "Lulus"),
-            itemRiwayat("Tanggal ****", "Lulus"),
-            itemRiwayat("Tanggal ****", "Lulus"),
-            itemRiwayat("Tanggal ****", "Lulus"),
-            itemRiwayat("Tanggal ****", "Lulus")
-        )
+        val user = FirebaseAuth.getInstance().currentUser ?: return
+        val uid = user.uid
 
-        val adapter = RiwayatAdapter(items) { item ->
-            // Klik item untuk lihat detail
-            Toast.makeText(this, "Clicked: ${item.tanggal}", Toast.LENGTH_SHORT).show()
-            // Bisa navigate ke detail hasil prediksi
-            // val intent = Intent(this, hasilPrediksi::class.java)
-            // startActivity(intent)
-        }
+        val ref = FirebaseDatabase.getInstance()
+            .reference
+            .child("ml_result")
+            .child(uid)
 
-        binding.recyclerRiwayat.adapter = adapter
+        ref.orderByChild("timestamp")
+            .addValueEventListener(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val list = mutableListOf<RiwayatModel>()
+
+                    for (data in snapshot.children) {
+                        val model = RiwayatModel(
+                            id = data.key ?: "",
+                            result = data.child("result").getValue(String::class.java) ?: "-",
+                            timestamp = data.child("timestamp").getValue(Long::class.java) ?: 0L
+                        )
+                        list.add(model)
+                    }
+
+                    list.reverse()
+
+                    binding.recyclerRiwayat.adapter =
+                        RiwayatAdapter(list) { item ->
+                            Toast.makeText(
+                                this@riwayatPrediksi,
+                                "Klik: ${item.result}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(
+                        this@riwayatPrediksi,
+                        "Gagal memuat data",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
     }
 
     private fun setupBottomNavigation() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
-                    val intent = Intent(this, HomePage::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(intent)
+                    startActivity(
+                        Intent(this, HomePage::class.java)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    )
                     finish()
-                    true
-                }
-                R.id.nav_profile -> {
-                    Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false

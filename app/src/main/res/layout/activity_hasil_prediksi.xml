@@ -114,6 +114,18 @@
                 android:textSize="14sp"
                 android:textColor="#666666"
                 android:lineSpacingExtra="4dp"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBackHome"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="Kembali ke Home"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/accent"
+                app:cornerRadius="12dp"/>
+
 
         </LinearLayout>
     </ScrollView>

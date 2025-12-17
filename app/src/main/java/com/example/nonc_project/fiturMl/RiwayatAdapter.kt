@@ -1,40 +1,42 @@
 package com.example.nonc_project.fiturMl
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nonc_project.R
+import com.example.nonc_project.databinding.ItemRiwayatBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RiwayatAdapter(
-    private val items: List<itemRiwayat>,
-    private val onItemClick: (itemRiwayat) -> Unit
+    private val items: List<RiwayatModel>,
+    private val onClick: (RiwayatModel) -> Unit
 ) : RecyclerView.Adapter<RiwayatAdapter.ViewHolder>() {
 
+    inner class ViewHolder(val binding: ItemRiwayatBinding)
+        : RecyclerView.ViewHolder(binding.root)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.activity_item_riwayat, parent, false)
-        return ViewHolder(view)
+        val binding = ItemRiwayatBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position], onItemClick)
+        val item = items[position]
+
+        holder.binding.tanggalItem.text =
+            SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                .format(Date(item.timestamp))
+
+        holder.binding.statusItem.text = item.result
+
+        holder.itemView.setOnClickListener {
+            onClick(item)
+        }
     }
 
     override fun getItemCount(): Int = items.size
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tanggalItem: TextView = itemView.findViewById(R.id.tanggal_item)
-        private val statusItem: TextView = itemView.findViewById(R.id.status_item)
-
-        fun bind(item: itemRiwayat, onItemClick: (itemRiwayat) -> Unit) {
-            tanggalItem.text = item.tanggal
-            statusItem.text = item.status
-
-            itemView.setOnClickListener {
-                onItemClick(item)
-            }
-        }
-    }
 }
