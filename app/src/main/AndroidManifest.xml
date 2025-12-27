@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permission umum untuk Google Sign-In -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,88 +13,83 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NonC_Project">
-
-        <!-- ======= AUTHENTICATION FLOW ======= -->
-
+        <activity
+            android:name=".fiturProjectTask.ui.AddTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fiturProjectTask.ui.TaskListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fiturProjectTask.ui.ProjectListActivity"
+            android:exported="false" /> <!-- ======= AUTHENTICATION FLOW ======= -->
         <!-- SplashScreen sebagai LAUNCHER -->
         <activity
             android:name=".authentication.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- SplashScreen Fail -->
+        </activity> <!-- SplashScreen Fail -->
         <activity
             android:name=".authentication.SplashScreenFail"
-            android:exported="false" />
-
-        <!-- Login Page (Google Sign-In place here) -->
+            android:exported="false" /> <!-- Login Page (Google Sign-In place here) -->
         <activity
             android:name=".authentication.LoginPage"
-            android:exported="true" />
-
-        <!-- Registration -->
+            android:exported="true" /> <!-- Registration -->
         <activity
             android:name=".authentication.Registration"
-            android:exported="false" />
-
-
-        <!-- ========== HOME / MAIN ========= -->
+            android:exported="false" /> <!-- ========== HOME / MAIN ========= -->
         <activity
             android:name=".HomePage"
             android:exported="true" />
-
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
-
-
-        <!-- ========= PROFILE ========= -->
+            android:exported="false" /> <!-- ========= PROFILE ========= -->
         <activity
             android:name=".profile"
-            android:exported="false" />
-
-
-        <!-- ========= FITUR MACHINE LEARNING ========= -->
-
+            android:exported="false" /> <!-- ========= FITUR MACHINE LEARNING ========= -->
         <!-- Flow Prediksi -->
         <activity
             android:name=".fiturMl.prediksiKlasifikasiPage"
+            android:exported="false" /> <!-- Input Analisa -->
+        <activity
+            android:name=".fiturMl.inputAnalisa1"
             android:exported="false" />
-
-        <!-- Input Analisa -->
-        <activity android:name=".fiturMl.inputAnalisa1" android:exported="false" />
-        <activity android:name=".fiturMl.inputAnalisa2" android:exported="false" />
-        <activity android:name=".fiturMl.inputAnalisa3" android:exported="false" />
-        <activity android:name=".fiturMl.inputAnalisa4" android:exported="false" />
-        <activity android:name=".fiturMl.inputAnalisa5" android:exported="false" />
-        <activity android:name=".fiturMl.inputAnalisa6" android:exported="false" />
-        <activity android:name=".fiturMl.inputAnalisa7" android:exported="false" />
-        <activity android:name=".fiturMl.inputAnalisa8" android:exported="false" />
-        <activity android:name=".fiturMl.inputAnalisa9" android:exported="false" />
-
-        <!-- Loading Analisa -->
+        <activity
+            android:name=".fiturMl.inputAnalisa2"
+            android:exported="false" />
+        <activity
+            android:name=".fiturMl.inputAnalisa3"
+            android:exported="false" />
+        <activity
+            android:name=".fiturMl.inputAnalisa4"
+            android:exported="false" />
+        <activity
+            android:name=".fiturMl.inputAnalisa5"
+            android:exported="false" />
+        <activity
+            android:name=".fiturMl.inputAnalisa6"
+            android:exported="false" />
+        <activity
+            android:name=".fiturMl.inputAnalisa7"
+            android:exported="false" />
+        <activity
+            android:name=".fiturMl.inputAnalisa8"
+            android:exported="false" />
+        <activity
+            android:name=".fiturMl.inputAnalisa9"
+            android:exported="false" /> <!-- Loading Analisa -->
         <activity
             android:name=".fiturMl.analisaLoading"
-            android:exported="false" />
-
-        <!-- Hasil Prediksi -->
+            android:exported="false" /> <!-- Hasil Prediksi -->
         <activity
             android:name=".fiturMl.HasilPrediksi"
-            android:exported="false" />
-
-        <!-- Riwayat Prediksi -->
+            android:exported="false" /> <!-- Riwayat Prediksi -->
         <activity
             android:name=".fiturMl.riwayatPrediksi"
             android:exported="false" />
-
-<!--        <activity-->
-<!--            android:name=".fiturMl.itemRiwayat"-->
-<!--            android:exported="false" />-->
-
     </application>
 
 </manifest>

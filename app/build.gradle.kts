@@ -55,30 +55,41 @@ android {
 
 dependencies {
 
+    // Android Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.firebase.database)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
-    // Tambahan
+    // Material (pakai satu saja)
     implementation("com.google.android.material:material:1.11.0")
+
+    // Recycler & UI
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.cardview:cardview:1.0.0")
+
+    // Firebase BOM (SATU SUMBER VERSI)
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+
+    // Firebase
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    // Google Login
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    // Image & Animation
     implementation("com.github.bumptech.glide:glide:4.16.0")
     kapt("com.github.bumptech.glide:compiler:4.16.0")
     implementation("com.airbnb.android:lottie:6.3.0")
+
+    // ML
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.20.0")
 
-    implementation (platform("com.google.firebase:firebase-bom:32.4.1"))
-    implementation ("com.google.firebase:firebase-auth-ktx" )
-    implementation ("com.google.firebase:firebase-analytics-ktx")
-
-
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
