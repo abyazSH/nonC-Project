@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">nonC_Project</string>
+    <string-array name="task_filter">
+        <item>ALL</item>
+        <item>TODO</item>
+        <item>IN PROGRESS</item>
+        <item>DONE</item>
+    </string-array>
+
 </resources>

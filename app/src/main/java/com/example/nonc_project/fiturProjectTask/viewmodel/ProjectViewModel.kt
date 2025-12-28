@@ -42,4 +42,10 @@ class ProjectViewModel : ViewModel() {
             _isSuccess.postValue(it)
         }
     }
+    fun observeProject(projectId: String) {
+        repository.observeProject(projectId) { project ->
+            project?.let { _projectList.postValue(listOf(it)) }
+        }
+    }
+
 }

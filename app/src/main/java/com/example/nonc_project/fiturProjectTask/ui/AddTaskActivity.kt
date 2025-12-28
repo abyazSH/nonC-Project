@@ -2,16 +2,17 @@ package com.example.nonc_project.fiturProjectTask.ui
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityAddTaskBinding
 import com.example.nonc_project.fiturProjectTask.model.Task
-import com.example.nonc_project.fiturProjectTask.repository.TaskRepository
+import com.example.nonc_project.fiturProjectTask.viewmodel.TaskViewModel
 import java.util.UUID
 
 class AddTaskActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddTaskBinding
-    private val repository = TaskRepository()
+    private val viewModel: TaskViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,36 +22,26 @@ class AddTaskActivity : AppCompatActivity() {
         val projectId = intent.getStringExtra("PROJECT_ID") ?: return
 
         binding.btnSaveTask.setOnClickListener {
-            saveTask(projectId)
-        }
-    }
+            val title = binding.etTaskTitle.text.toString()
+            val desc = binding.etTaskDescription.text.toString()
 
-    private fun saveTask(projectId: String) {
-        val title = binding.etTaskTitle.text.toString()
-        val desc = binding.etTaskDescription.text.toString()
-
-        if (title.isBlank()) {
-            Toast.makeText(this, "Title wajib diisi", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val task = Task(
-            taskId = UUID.randomUUID().toString(),
-            projectId = projectId,
-            title = title,
-            description = desc,
-            progress = 0,
-            status = "TODO",
-            createdAt = System.currentTimeMillis()
-        )
-
-        repository.createTask(task) { success ->
-            if (success) {
-                Toast.makeText(this, "Task berhasil ditambahkan", Toast.LENGTH_SHORT).show()
-                finish()
-            } else {
-                Toast.makeText(this, "Gagal menyimpan task", Toast.LENGTH_SHORT).show()
+            if (title.isBlank()) {
+                Toast.makeText(this, "Judul wajib diisi", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            val task = Task(
+                taskId = UUID.randomUUID().toString(),
+                projectId = projectId,
+                title = title,
+                description = desc,
+                progress = 0,
+                status = "TODO",
+                createdAt = System.currentTimeMillis()
+            )
+
+            viewModel.createTask(task)
+            finish()
         }
     }
 }

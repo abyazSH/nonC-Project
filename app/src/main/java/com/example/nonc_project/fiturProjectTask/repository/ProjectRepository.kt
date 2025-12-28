@@ -17,6 +17,13 @@ class ProjectRepository {
             .addOnSuccessListener { onResult(true) }
             .addOnFailureListener { onResult(false) }
     }
+    fun observeProject(projectId: String, onResult: (Project?) -> Unit) {
+        projectRef.document(projectId)
+            .addSnapshotListener { snapshot, _ ->
+                onResult(snapshot?.toObject(Project::class.java))
+            }
+    }
+
 
     fun getProjectsByUser(
         userId: String,

@@ -1,5 +1,6 @@
 package com.example.nonc_project.fiturProjectTask.ui
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,9 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nonc_project.R
 import com.example.nonc_project.fiturProjectTask.model.Project
+import android.content.Context
 
 class ProjectAdapter(
-    private var projectList: List<Project>
+    private var projectList: List<Project>,
+    private val context: Context
 ) : RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() {
 
     class ProjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -27,6 +30,13 @@ class ProjectAdapter(
         val project = projectList[position]
         holder.tvTitle.text = project.title
         holder.tvDescription.text = project.description
+
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val i = Intent(context, TaskListActivity::class.java)
+            i.putExtra("PROJECT_ID", project.projectId)
+            context.startActivity(i)
+        }
     }
 
     override fun getItemCount(): Int = projectList.size

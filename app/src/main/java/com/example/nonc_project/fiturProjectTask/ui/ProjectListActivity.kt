@@ -1,5 +1,6 @@
 package com.example.nonc_project.fiturProjectTask.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,7 @@ class ProjectListActivity : AppCompatActivity() {
         binding = ActivityProjectListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = ProjectAdapter(emptyList())
+        adapter = ProjectAdapter(emptyList(), this)
         binding.rvProject.layoutManager = LinearLayoutManager(this)
         binding.rvProject.adapter = adapter
 
@@ -27,8 +28,20 @@ class ProjectListActivity : AppCompatActivity() {
 
         viewModel.projectList.observe(this) {
             adapter.updateData(it)
+
+            if (it.isEmpty()) {
+                startActivity(Intent(this, AddProjectActivity::class.java))
+            }
         }
 
         viewModel.loadProjects(userId)
+        binding.fabAddProject.setOnClickListener {
+            startActivity(Intent(this, AddProjectActivity::class.java))
+        }
     }
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadProjects(FirebaseAuth.getInstance().uid!!)
+    }
+
 }

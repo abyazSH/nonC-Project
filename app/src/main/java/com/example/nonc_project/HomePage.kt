@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nonc_project.databinding.ActivityHomePageBinding
 import com.example.nonc_project.fiturMl.prediksiKlasifikasiPage
 import com.example.nonc_project.fiturMl.riwayatPrediksi
+import com.example.nonc_project.fiturProjectTask.ui.ProjectListActivity
 
 class HomePage : AppCompatActivity() {
 
@@ -53,7 +54,8 @@ class HomePage : AppCompatActivity() {
                 0 -> startActivity(Intent(this, prediksiKlasifikasiPage::class.java))
                 1 -> startActivity(Intent(this, profile::class.java))
                 2 -> startActivity(Intent(this, riwayatPrediksi::class.java))
-                3 -> Toast.makeText(this, "Studi Tracker belum tersedia", Toast.LENGTH_SHORT).show()
+                3 -> startActivity(Intent(this, ProjectListActivity::class.java))
+
             }
         }
 

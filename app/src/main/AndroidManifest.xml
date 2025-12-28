@@ -14,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NonC_Project">
         <activity
+            android:name=".fiturProjectTask.ui.AddProjectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fiturProjectTask.ui.EditTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fiturProjectTask.ui.ProjectDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".fiturProjectTask.ui.AddTaskActivity"
             android:exported="false" />
         <activity
