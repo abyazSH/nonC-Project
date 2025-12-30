@@ -44,9 +44,15 @@ class HomePage : AppCompatActivity() {
             ),
             CardItem(
                 R.drawable.img_hp4,
-                "Studi Tracker",
+                "PROJECT",
                 "Tracking assignment & to-do list."
-            )
+            ),
+            CardItem(
+            R.drawable.img_hp4,
+            "Studi Tracker",
+            "Tracking assignment & to-do list."
+        )
+
         )
 
         val adapter = CardAdapter(items) { _, position ->
@@ -55,6 +61,7 @@ class HomePage : AppCompatActivity() {
                 1 -> startActivity(Intent(this, profile::class.java))
                 2 -> startActivity(Intent(this, riwayatPrediksi::class.java))
                 3 -> startActivity(Intent(this, ProjectListActivity::class.java))
+                4 -> startActivity(Intent(this, ProjectListActivity::class.java))
 
             }
         }

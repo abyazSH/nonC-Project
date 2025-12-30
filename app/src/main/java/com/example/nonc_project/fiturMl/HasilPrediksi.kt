@@ -39,7 +39,7 @@ class HasilPrediksi : AppCompatActivity() {
 
         // Bottom Nav
         binding.bottomNavigation.setOnItemSelectedListener {
-            if (it.itemId == R.id.nav_home) {
+            if (it.itemId == R.id.menu_home) {
                 navigateHome()
                 true
             } else false

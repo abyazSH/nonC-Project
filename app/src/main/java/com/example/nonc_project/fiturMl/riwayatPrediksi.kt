@@ -77,7 +77,7 @@ class riwayatPrediksi : AppCompatActivity() {
     private fun setupBottomNavigation() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_home -> {
+                R.id.menu_home -> {
                     startActivity(
                         Intent(this, HomePage::class.java)
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

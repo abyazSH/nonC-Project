@@ -65,14 +65,14 @@ class profile : AppCompatActivity() {
     private fun setupBottomNavigation() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_home -> {
+                R.id.menu_home -> {
                     val intent = Intent(this, HomePage::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                     finish()
                     true
                 }
-                R.id.nav_profile -> true
+                R.id.menu_profile -> true
                 else -> false
             }
         }

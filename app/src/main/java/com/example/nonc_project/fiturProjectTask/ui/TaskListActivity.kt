@@ -28,32 +28,41 @@ class TaskListActivity : AppCompatActivity() {
 
         projectId = intent.getStringExtra("PROJECT_ID") ?: return
 
+        // BACK BUTTON
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
         adapter = TaskAdapter(emptyList())
         binding.rvTasks.layoutManager = LinearLayoutManager(this)
         binding.rvTasks.adapter = adapter
 
-        // Load data
         viewModel.taskList.observe(this) { list ->
             allTasks = list
             adapter.updateData(list)
         }
 
-        // ➕ FAB Add Task
         binding.fabAddTask.setOnClickListener {
             val i = Intent(this, AddTaskActivity::class.java)
             i.putExtra("PROJECT_ID", projectId)
             startActivity(i)
         }
 
-        // Filter spinner
-        binding.spFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-                val status = parent.getItemAtPosition(pos).toString()
-                val filtered = if (status == "ALL") allTasks else allTasks.filter { it.status == status }
-                adapter.updateData(filtered)
+        binding.spFilter.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, pos: Int, id: Long
+                ) {
+                    val status = parent.getItemAtPosition(pos).toString()
+                    val filtered =
+                        if (status == "ALL") allTasks
+                        else allTasks.filter { it.status == status }
+
+                    adapter.updateData(filtered)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
     }
 
     override fun onResume() {
