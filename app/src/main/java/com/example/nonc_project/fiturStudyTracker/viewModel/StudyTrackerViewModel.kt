@@ -1,4 +1,4 @@
-package com.example.nonc_project.fiturStudyTracker.viewModel
+package com.example.nonc_project.fiturStudyTracker.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,8 +14,8 @@ class StudyTrackerViewModel : ViewModel() {
     val courseList: LiveData<List<StudyCourse>> = _courseList
 
     fun loadCourses() {
-        repo.getCourses {
-            _courseList.postValue(it)
+        repo.getCourses { courses ->
+            _courseList.postValue(courses)
         }
     }
 }

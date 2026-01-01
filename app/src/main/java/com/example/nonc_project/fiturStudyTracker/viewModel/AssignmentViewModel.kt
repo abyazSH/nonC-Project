@@ -1,4 +1,4 @@
-package com.example.nonc_project.fiturStudyTracker.viewModel
+package com.example.nonc_project.fiturStudyTracker.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,8 +14,8 @@ class AssignmentViewModel : ViewModel() {
     val assignmentList: LiveData<List<StudyAssignment>> = _assignmentList
 
     fun loadAssignments(courseId: String) {
-        repo.getAssignmentsByCourse(courseId) {
-            _assignmentList.postValue(it)
+        repo.getAssignmentsByCourse(courseId) { list ->
+            _assignmentList.postValue(list)
         }
     }
 }

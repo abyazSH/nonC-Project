@@ -6,11 +6,28 @@ class StudyTrackerRepository {
 
     fun getCourses(onResult: (List<StudyCourse>) -> Unit) {
 
-        // SIMULASI SEMENTARA (nanti ganti Classroom API)
         val dummy = listOf(
-            StudyCourse("C1", "Mobile Programming", 4, 1),
-            StudyCourse("C2", "Artificial Intelligence", 3, 0),
-            StudyCourse("C3", "Cloud Computing", 2, 1)
+            StudyCourse(
+                courseId = "C1",
+                userId = "x5MrI3hEyPOJXD5JbqbBTjwHL6A2",
+                name = "Mobile Programming",
+                lecturer = "Pak Budi",
+                colorTag = "#4CAF50"
+            ),
+            StudyCourse(
+                courseId = "C2",
+                userId = "x5MrI3hEyPOJXD5JbqbBTjwHL6A2",
+                name = "Artificial Intelligence",
+                lecturer = "Bu Sari",
+                colorTag = "#2196F3"
+            ),
+            StudyCourse(
+                courseId = "C3",
+                userId = "x5MrI3hEyPOJXD5JbqbBTjwHL6A2",
+                name = "Cloud Computing",
+                lecturer = "Pak Dimas",
+                colorTag = "#FF9800"
+            )
         )
 
         onResult(dummy)

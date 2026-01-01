@@ -4,25 +4,26 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nonc_project.databinding.ItemStudyCourseBinding
+import com.example.nonc_project.databinding.ItemCourseBinding
 import com.example.nonc_project.fiturStudyTracker.model.StudyCourse
 
-class StudyCourseAdapter(private var courses: List<StudyCourse>)
-    : RecyclerView.Adapter<StudyCourseAdapter.ViewHolder>() {
+class StudyCourseAdapter(
+    private var courses: List<StudyCourse>
+) : RecyclerView.Adapter<StudyCourseAdapter.CourseVH>() {
 
-    inner class ViewHolder(val binding: ItemStudyCourseBinding)
+    inner class CourseVH(val binding: ItemCourseBinding)
         : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemStudyCourseBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseVH {
+        return CourseVH(
+            ItemCourseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CourseVH, position: Int) {
         val course = courses[position]
-
-        holder.binding.tvCourseName.text = course.courseName
-        holder.binding.tvTotal.text = "${course.totalAssignment} tugas"
-        holder.binding.tvOverdue.text = "Overdue: ${course.overdueCount}"
+        holder.binding.tvCourseName.text = course.name
+        holder.binding.tvLecturer.text = course.lecturer
 
         holder.itemView.setOnClickListener {
             val i = Intent(it.context, AssignmentListActivity::class.java)
@@ -33,8 +34,8 @@ class StudyCourseAdapter(private var courses: List<StudyCourse>)
 
     override fun getItemCount() = courses.size
 
-    fun updateData(newData: List<StudyCourse>) {
-        courses = newData
+    fun updateData(newList: List<StudyCourse>) {
+        courses = newList
         notifyDataSetChanged()
     }
 }

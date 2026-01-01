@@ -1,33 +1,31 @@
 package com.example.nonc_project.fiturStudyTracker.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.nonc_project.databinding.ActivityAssignmentListBinding
-import com.example.nonc_project.fiturStudyTracker.viewModel.AssignmentViewModel
+import com.example.nonc_project.databinding.ActivityStudyTrackerBinding
+import com.example.nonc_project.fiturStudyTracker.viewmodel.StudyTrackerViewModel
 
-class AssignmentListActivity : AppCompatActivity() {
+class StudyTrackerActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAssignmentListBinding
-    private val viewModel: AssignmentViewModel by viewModels()
+    private lateinit var binding: ActivityStudyTrackerBinding
+    private val viewModel: StudyTrackerViewModel by viewModels()
+    private lateinit var adapter: StudyCourseAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAssignmentListBinding.inflate(layoutInflater)
+        binding = ActivityStudyTrackerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val courseId = intent.getStringExtra("COURSE_ID") ?: return
+        adapter = StudyCourseAdapter(emptyList())
+        binding.rvCourses.layoutManager = LinearLayoutManager(this)
+        binding.rvCourses.adapter = adapter
 
-        val adapter = StudyAssignmentAdapter(emptyList())
-        binding.rvAssignments.layoutManager = LinearLayoutManager(this)
-        binding.rvAssignments.adapter = adapter
-
-        viewModel.assignmentList.observe(this) {
+        viewModel.courseList.observe(this) {
             adapter.updateData(it)
         }
 
-        viewModel.loadAssignments(courseId)
+        viewModel.loadCourses()
     }
 }
