@@ -3,6 +3,7 @@ package com.example.nonc_project.fiturProjectTask.ui
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityAddTaskBinding
 import com.example.nonc_project.fiturProjectTask.model.Task
@@ -43,5 +44,17 @@ class AddTaskActivity : AppCompatActivity() {
             viewModel.createTask(task)
             finish()
         }
+
+        // ✅ CANCEL BUTTON
+        binding.btnCancelTask.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Batalkan?")
+                .setMessage("Data yang belum disimpan akan hilang")
+                .setPositiveButton("Ya") { _, _ -> finish() }
+                .setNegativeButton("Tidak", null)
+                .show()
+        }
+
     }
+
 }

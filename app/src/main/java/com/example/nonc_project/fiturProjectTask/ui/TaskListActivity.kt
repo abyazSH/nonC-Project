@@ -2,15 +2,15 @@ package com.example.nonc_project.fiturProjectTask.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nonc_project.databinding.ActivityTaskListBinding
 import com.example.nonc_project.fiturProjectTask.model.Task
-import com.example.nonc_project.fiturProjectTask.ui.TaskAdapter
 import com.example.nonc_project.fiturProjectTask.viewmodel.TaskViewModel
-import android.view.View
-import android.widget.AdapterView
 
 class TaskListActivity : AppCompatActivity() {
 
@@ -28,26 +28,34 @@ class TaskListActivity : AppCompatActivity() {
 
         projectId = intent.getStringExtra("PROJECT_ID") ?: return
 
-        // BACK BUTTON
-        binding.btnBack.setOnClickListener {
-            finish()
-        }
+        // BACK
+        binding.btnBack.setOnClickListener { finish() }
 
+        // RV
         adapter = TaskAdapter(emptyList())
         binding.rvTasks.layoutManager = LinearLayoutManager(this)
         binding.rvTasks.adapter = adapter
 
+        // ===== SPINNER FILTER (WAJIB ADA) =====
+        val statusList = listOf("ALL", "TODO", "IN PROGRESS", "DONE")
+        val spinnerAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            statusList
+        )
+        spinnerAdapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+        binding.spFilter.adapter = spinnerAdapter
+        // =====================================
+
+        // OBSERVE TASK
         viewModel.taskList.observe(this) { list ->
             allTasks = list
             adapter.updateData(list)
         }
 
-        binding.fabAddTask.setOnClickListener {
-            val i = Intent(this, AddTaskActivity::class.java)
-            i.putExtra("PROJECT_ID", projectId)
-            startActivity(i)
-        }
-
+        // FILTER LOGIC
         binding.spFilter.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -63,6 +71,13 @@ class TaskListActivity : AppCompatActivity() {
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
+
+        // FAB ADD TASK
+        binding.fabAddTask.setOnClickListener {
+            val i = Intent(this, AddTaskActivity::class.java)
+            i.putExtra("PROJECT_ID", projectId)
+            startActivity(i)
+        }
     }
 
     override fun onResume() {

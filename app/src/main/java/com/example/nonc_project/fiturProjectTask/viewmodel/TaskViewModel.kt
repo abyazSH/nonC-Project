@@ -45,7 +45,12 @@ class TaskViewModel : ViewModel() {
         progress: Int,
         status: String
     ) {
-        taskRepo.updateTaskProgress(taskId, progress, status) { success ->
+        taskRepo.updateTaskProgress(
+            projectId,
+            taskId,
+            progress,
+            status
+        ) { success ->
             if (success) {
                 taskRepo.calculateProjectProgress(projectId) { avg ->
                     projectRepo.updateProjectProgress(projectId, avg)
@@ -56,4 +61,6 @@ class TaskViewModel : ViewModel() {
             }
         }
     }
+
+
 }

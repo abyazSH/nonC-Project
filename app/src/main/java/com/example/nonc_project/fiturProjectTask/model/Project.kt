@@ -15,6 +15,7 @@ data class Project(
 
     var progressPercentage: Int = 0,
     var status: String = "Not Started",
+    var activeTaskCount: Int = 0,
 
     var createdAt: Long = System.currentTimeMillis()
 )

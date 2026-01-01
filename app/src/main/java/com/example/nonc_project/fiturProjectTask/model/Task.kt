@@ -6,7 +6,8 @@ data class Task(
     var title: String = "",
     var description: String = "",
     var progress: Int = 0,
-    var status: String = "To Do",
+    var status: String = "TODO",
     var createdAt: Long = System.currentTimeMillis()
 )
+
 

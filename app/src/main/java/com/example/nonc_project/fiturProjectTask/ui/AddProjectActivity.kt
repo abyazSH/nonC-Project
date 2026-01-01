@@ -9,6 +9,7 @@ import com.example.nonc_project.R
 import com.example.nonc_project.databinding.ActivityAddProjectBinding
 import com.example.nonc_project.fiturProjectTask.viewmodel.ProjectViewModel
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import com.example.nonc_project.fiturProjectTask.model.Project
 import com.google.firebase.auth.FirebaseAuth
 import java.util.UUID
@@ -43,9 +44,19 @@ class AddProjectActivity : AppCompatActivity() {
                 status = "Not Started"
             )
 
-
             viewModel.createProject(project)
             finish()
         }
+
+        // ✅ CANCEL BUTTON
+        binding.btnCancelProject.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Batalkan?")
+                .setMessage("Data yang belum disimpan akan hilang")
+                .setPositiveButton("Ya") { _, _ -> finish() }
+                .setNegativeButton("Tidak", null)
+                .show()
+        }
     }
+
 }

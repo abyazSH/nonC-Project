@@ -19,7 +19,7 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Projrct Title"
+            android:text="Project Title"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
@@ -32,15 +32,35 @@
             android:layout_marginTop="4dp"
             android:textSize="14sp"/>
 
-        <!-- LABEL -->
-        <TextView
-            android:id="@+id/tvProgressLabel"
+        <!-- LABEL + BADGE ROW -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Progress"
-            android:textSize="12sp"
-            android:textStyle="bold"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/tvProgressLabel"
+                android:text="Progress"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvTaskBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="0"
+                android:textSize="12sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/badge_red"
+                android:visibility="gone"/>
+        </LinearLayout>
 
         <!-- PROGRESS BAR -->
         <ProgressBar

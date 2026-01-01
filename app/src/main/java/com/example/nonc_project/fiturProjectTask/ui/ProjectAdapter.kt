@@ -21,7 +21,9 @@ class ProjectAdapter(
         val tvDescription: TextView = itemView.findViewById(R.id.tvDescription)
         val progressBar: ProgressBar = itemView.findViewById(R.id.projectProgressBar)
         val tvProgressPercent: TextView = itemView.findViewById(R.id.tvProgressPercent)
+        val tvTaskBadge: TextView = itemView.findViewById(R.id.tvTaskBadge)
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -35,11 +37,28 @@ class ProjectAdapter(
         holder.tvTitle.text = project.title
         holder.tvDescription.text = project.description
 
-        // === PROGRESS PROJECT ===
-        val progress = project.progressPercentage.coerceIn(0, 100)
+        // Progress
+        holder.progressBar.progress = project.progressPercentage
+        holder.tvProgressPercent.text =
+            "${project.progressPercentage}% selesai"
 
-        holder.progressBar.progress = progress
-        holder.tvProgressPercent.text = "$progress% selesai"
+        // ===== BADGE TASK AKTIF =====
+        val activeCount = project.activeTaskCount
+
+        if (activeCount > 0) {
+            holder.tvTaskBadge.visibility = View.VISIBLE
+            holder.tvTaskBadge.text = activeCount.toString()
+
+            val badgeBg = when {
+                activeCount <= 3 -> R.drawable.badge_green
+                activeCount <= 6 -> R.drawable.badge_orange
+                else -> R.drawable.badge_red
+            }
+
+            holder.tvTaskBadge.setBackgroundResource(badgeBg)
+        } else {
+            holder.tvTaskBadge.visibility = View.GONE
+        }
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, TaskListActivity::class.java)

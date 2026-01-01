@@ -7,10 +7,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nonc_project.HomePage
+import com.example.nonc_project.R
 import com.example.nonc_project.databinding.ActivityProjectListBinding
 import com.example.nonc_project.fiturProjectTask.viewmodel.ProjectViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.example.nonc_project.R
 import com.example.nonc_project.profile
 
 class ProjectListActivity : AppCompatActivity() {
@@ -26,7 +26,17 @@ class ProjectListActivity : AppCompatActivity() {
 
         setupRecyclerView()
         setupBottomNavigation()
-        observeData()
+
+        val userId = FirebaseAuth.getInstance().uid ?: return
+
+        // 🔥 REALTIME OBSERVE
+        viewModel.observeProjects(userId)
+
+        viewModel.projectList.observe(this) { projects ->
+            adapter.updateData(projects)
+            binding.cardOverview.visibility =
+                if (projects.isEmpty()) View.VISIBLE else View.GONE
+        }
 
         binding.fabAddProject.setOnClickListener {
             startActivity(Intent(this, AddProjectActivity::class.java))
@@ -39,46 +49,22 @@ class ProjectListActivity : AppCompatActivity() {
         binding.rvProject.adapter = adapter
     }
 
-    private fun observeData() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-
-        viewModel.projectList.observe(this) { projects ->
-            adapter.updateData(projects)
-
-            // tampilkan greeting hanya jika belum ada project
-            binding.cardOverview.visibility =
-                if (projects.isEmpty()) View.VISIBLE else View.GONE
-        }
-
-        viewModel.loadProjects(userId)
-    }
-
     private fun setupBottomNavigation() {
         binding.bottomNavigation.selectedItemId = R.id.menu_project
 
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
                 R.id.menu_home -> {
                     startActivity(Intent(this, HomePage::class.java))
                     true
                 }
-
                 R.id.menu_project -> true
-
                 R.id.menu_profile -> {
                     startActivity(Intent(this, profile::class.java))
                     true
                 }
-
                 else -> false
             }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        FirebaseAuth.getInstance().uid?.let {
-            viewModel.loadProjects(it)
         }
     }
 }

@@ -5,61 +5,40 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ProjectRepository {
 
-    private val db = FirebaseFirestore.getInstance()
-    private val projectRef = db.collection("projects")
+    private val projectRef = FirebaseFirestore.getInstance()
+        .collection("projects")
 
     fun createProject(project: Project, onResult: (Boolean) -> Unit) {
-        val docId = project.projectId ?: projectRef.document().id
-        project.projectId = docId
-
-        projectRef.document(docId)
+        projectRef.document(project.projectId)
             .set(project)
             .addOnSuccessListener { onResult(true) }
             .addOnFailureListener { onResult(false) }
     }
-    fun observeProject(projectId: String, onResult: (Project?) -> Unit) {
-        projectRef.document(projectId)
-            .addSnapshotListener { snapshot, _ ->
-                onResult(snapshot?.toObject(Project::class.java))
-            }
-    }
 
-
-    fun getProjectsByUser(
+    // 🔥 REALTIME OBSERVER (INI YANG PENTING)
+    fun observeProjectsByUser(
         userId: String,
         onResult: (List<Project>) -> Unit
     ) {
         projectRef
             .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { snapshot ->
+            .addSnapshotListener { snapshot, error ->
+                if (error != null || snapshot == null) {
+                    onResult(emptyList())
+                    return@addSnapshotListener
+                }
                 onResult(snapshot.toObjects(Project::class.java))
             }
-            .addOnFailureListener {
-                onResult(emptyList())
-            }
     }
 
-    fun deleteProject(projectId: String, onResult: (Boolean) -> Unit) {
-        projectRef.document(projectId)
-            .delete()
-            .addOnSuccessListener { onResult(true) }
-            .addOnFailureListener { onResult(false) }
-    }
-
-    fun updateProjectProgress(
-        projectId: String,
-        progress: Int
-    ) {
+    fun updateProjectProgress(projectId: String, progress: Int) {
         val status = when {
             progress == 0 -> "Not Started"
             progress in 1..99 -> "In Progress"
             else -> "Completed"
         }
 
-        FirebaseFirestore.getInstance()
-            .collection("projects")
-            .document(projectId)
+        projectRef.document(projectId)
             .update(
                 mapOf(
                     "progressPercentage" to progress,
@@ -67,5 +46,4 @@ class ProjectRepository {
                 )
             )
     }
-
 }

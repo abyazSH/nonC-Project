@@ -7,6 +7,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityEditTaskBinding
 import com.example.nonc_project.fiturProjectTask.viewmodel.TaskViewModel
+import android.util.Log
+
 
 class EditTaskActivity : AppCompatActivity() {
 
@@ -42,6 +44,7 @@ class EditTaskActivity : AppCompatActivity() {
         })
 
         binding.btnSave.setOnClickListener {
+            Log.d("EDIT_TASK", "Save clicked. Progress=${binding.seekProgress.progress}")
             viewModel.updateTaskAndProject(
                 projectId = projectId,
                 taskId = taskId,

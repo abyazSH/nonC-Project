@@ -8,44 +8,19 @@ import com.example.nonc_project.fiturProjectTask.repository.ProjectRepository
 
 class ProjectViewModel : ViewModel() {
 
-    private val repository = ProjectRepository()
+    private val repo = ProjectRepository()
 
     private val _projectList = MutableLiveData<List<Project>>()
     val projectList: LiveData<List<Project>> = _projectList
 
-    private val _isSuccess = MutableLiveData<Boolean>()
-    val isSuccess: LiveData<Boolean> = _isSuccess
-
-    /**
-     * Load projects by user
-     */
-    fun loadProjects(userId: String) {
-        repository.getProjectsByUser(userId) {
+    // 🔥 GANTI loadProjects → observeProjects
+    fun observeProjects(userId: String) {
+        repo.observeProjectsByUser(userId) {
             _projectList.postValue(it)
         }
     }
 
-    /**
-     * Create project
-     */
     fun createProject(project: Project) {
-        repository.createProject(project) {
-            _isSuccess.postValue(it)
-        }
+        repo.createProject(project) {}
     }
-
-    /**
-     * Delete project
-     */
-    fun deleteProject(projectId: String) {
-        repository.deleteProject(projectId) {
-            _isSuccess.postValue(it)
-        }
-    }
-    fun observeProject(projectId: String) {
-        repository.observeProject(projectId) { project ->
-            project?.let { _projectList.postValue(listOf(it)) }
-        }
-    }
-
 }
