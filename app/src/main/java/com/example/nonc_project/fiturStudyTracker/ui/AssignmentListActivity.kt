@@ -1,6 +1,8 @@
 package com.example.nonc_project.fiturStudyTracker.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,8 +28,20 @@ class AssignmentListActivity : AppCompatActivity() {
 
         viewModel.assignmentList.observe(this) { list ->
             adapter.updateData(list)
+
+            binding.layoutEmpty.visibility =
+                if (list.isEmpty()) View.VISIBLE else View.GONE
+
+            binding.rvAssignments.visibility =
+                if (list.isEmpty()) View.GONE else View.VISIBLE
         }
 
         viewModel.loadAssignments(courseId)
+
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(this, AddAssignmentActivity::class.java)
+            intent.putExtra("COURSE_ID", courseId)
+            startActivity(intent)
+        }
     }
 }

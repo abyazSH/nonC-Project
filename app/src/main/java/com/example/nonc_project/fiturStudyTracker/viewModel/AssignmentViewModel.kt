@@ -8,14 +8,20 @@ import com.example.nonc_project.fiturStudyTracker.repository.AssignmentRepositor
 
 class AssignmentViewModel : ViewModel() {
 
-    private val repo = AssignmentRepository()
+    private val repository = AssignmentRepository()
 
-    private val _assignmentList = MutableLiveData<List<StudyAssignment>>()
-    val assignmentList: LiveData<List<StudyAssignment>> = _assignmentList
+    val assignmentList: LiveData<List<StudyAssignment>> =
+        repository.assignmentList
 
     fun loadAssignments(courseId: String) {
-        repo.getAssignmentsByCourse(courseId) { list ->
-            _assignmentList.postValue(list)
-        }
+        repository.loadAssignments(courseId)
+    }
+
+    fun markAsDone(assignmentId: String) {
+        repository.markDone(assignmentId)
+    }
+
+    fun addAssignment(courseId: String, title: String, desc: String) {
+        repository.addAssignment(courseId, title, desc)
     }
 }
