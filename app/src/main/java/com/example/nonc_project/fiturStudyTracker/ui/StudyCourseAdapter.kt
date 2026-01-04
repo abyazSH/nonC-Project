@@ -26,10 +26,14 @@ class StudyCourseAdapter(
         holder.binding.tvLecturer.text = course.lecturer
 
         holder.itemView.setOnClickListener {
-            val i = Intent(it.context, AssignmentListActivity::class.java)
-            i.putExtra("COURSE_ID", course.courseId)
-            it.context.startActivity(i)
+            val ctx = it.context
+            val intent = Intent(ctx, CourseDetailActivity::class.java)
+            intent.putExtra("COURSE_ID", course.courseId)
+            intent.putExtra("COURSE_NAME", course.name)
+            intent.putExtra("LECTURER", course.lecturer)
+            ctx.startActivity(intent)
         }
+
     }
 
     override fun getItemCount() = courses.size

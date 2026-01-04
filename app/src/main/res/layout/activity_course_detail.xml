@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- COURSE NAME -->
+    <TextView
+        android:id="@+id/tvCourseName"
+        android:text="Course Name"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#111827"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- LECTURER -->
+    <TextView
+        android:id="@+id/tvLecturer"
+        android:text="Lecturer Name"
+        android:textSize="14sp"
+        android:textColor="#6B7280"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- DIVIDER -->
+    <View
+        android:layout_marginVertical="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E5E7EB"/>
+
+    <!-- ASSIGNMENT STATISTICS -->
+    <TextView
+        android:id="@+id/tvStats"
+        android:text="Assignments: 0 | TODO: 0 | DONE: 0"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#374151"
+        android:layout_marginBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAssignments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Assignments"
+        android:layout_marginTop="12dp"/>
+
+
+    <!-- DELETE BUTTON -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDelete"
+        android:text="Delete Course"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#EF4444"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

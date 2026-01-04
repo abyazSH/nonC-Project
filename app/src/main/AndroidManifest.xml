@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NonC_Project">
         <activity
+            android:name=".fiturStudyTracker.ui.CourseDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fiturStudyTracker.ui.AddCourseActivity"
+            android:exported="false" />
+        <activity
             android:name=".fiturStudyTracker.ui.AssignmentDetailActivity"
             android:exported="false" />
         <activity

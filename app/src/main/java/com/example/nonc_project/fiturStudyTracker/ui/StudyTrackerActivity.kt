@@ -1,5 +1,6 @@
 package com.example.nonc_project.fiturStudyTracker.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -26,7 +27,6 @@ class StudyTrackerActivity : AppCompatActivity() {
         viewModel.courseList.observe(this) { list ->
             adapter.updateData(list)
 
-            // ✅ EMPTY STATE HANDLER
             binding.layoutEmpty.visibility =
                 if (list.isEmpty()) View.VISIBLE else View.GONE
 
@@ -36,9 +36,13 @@ class StudyTrackerActivity : AppCompatActivity() {
 
         viewModel.loadCourses()
 
-        // nanti kita sambungkan ke AddCourseActivity
         binding.fabAddCourse.setOnClickListener {
-            // TODO: open AddCourseActivity
+            startActivity(Intent(this, AddCourseActivity::class.java))
         }
     }
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadCourses()
+    }
+
 }
