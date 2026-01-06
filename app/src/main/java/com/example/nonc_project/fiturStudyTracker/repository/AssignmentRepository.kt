@@ -11,8 +11,8 @@ class AssignmentRepository {
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
-    private fun assignmentRef() =
-        db.collection("assignments")
+    private fun assignmentRef() = db.collection("assignments")
+    private fun uid() = auth.currentUser?.uid ?: ""
 
     // ==============================
     // LOAD ASSIGNMENTS PER COURSE
@@ -21,23 +21,20 @@ class AssignmentRepository {
         courseId: String,
         onResult: (List<StudyAssignment>) -> Unit
     ) {
-        val userId = auth.uid ?: return
+        val userId = uid()
+        if (userId.isEmpty()) return
 
         assignmentRef()
             .whereEqualTo("courseId", courseId)
             .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { snap ->
-                val list = snap.documents.mapNotNull {
-                    it.toObject<StudyAssignment>()
-                }
-                onResult(list)
+                onResult(snap.toObjects(StudyAssignment::class.java))
             }
     }
 
-
     // ==============================
-    // ADD ASSIGNMENT (FIXED)
+    // ADD ASSIGNMENT
     // ==============================
     fun addAssignment(
         courseId: String,
@@ -45,19 +42,18 @@ class AssignmentRepository {
         desc: String,
         onResult: () -> Unit
     ) {
-        val userId = auth.uid ?: return
+        val userId = uid()
+        if (userId.isEmpty()) return
+
         val assignmentId = UUID.randomUUID().toString()
 
         val assignment = StudyAssignment(
             assignmentId = assignmentId,
             courseId = courseId,
-            userId = userId, // ✅ WAJIB
+            userId = userId,
             title = title,
             description = desc,
-            dueDate = System.currentTimeMillis(),
-            status = "TODO",
-            reminderEnabled = true,
-            createdAt = System.currentTimeMillis()
+            dueDate = System.currentTimeMillis()
         )
 
         assignmentRef()
@@ -67,30 +63,40 @@ class AssignmentRepository {
     }
 
     // ==============================
-    // MARK DONE
+    // MARK DONE (SAFE)
     // ==============================
     fun markDone(
         assignmentId: String,
-        courseId: String,
         onResult: () -> Unit
     ) {
+        val userId = uid()
+        if (userId.isEmpty()) return
+
         assignmentRef()
             .document(assignmentId)
-            .update("status", "DONE")
-            .addOnSuccessListener { onResult() }
+            .get()
+            .addOnSuccessListener { doc ->
+                if (doc.exists() && doc.getString("userId") == userId) {
+                    doc.reference
+                        .update("status", "DONE")
+                        .addOnSuccessListener { onResult() }
+                }
+            }
     }
 
     // ==============================
-    // DELETE BY COURSE (CASCADE)
+    // DELETE ASSIGNMENTS BY COURSE (SAFE)
     // ==============================
     fun deleteAssignmentsByCourse(courseId: String) {
+        val userId = uid()
+        if (userId.isEmpty()) return
+
         assignmentRef()
             .whereEqualTo("courseId", courseId)
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { snap ->
-                snap.documents.forEach {
-                    it.reference.delete()
-                }
+                snap.documents.forEach { it.reference.delete() }
             }
     }
 
@@ -101,22 +107,22 @@ class AssignmentRepository {
         courseId: String,
         onResult: (Triple<Int, Int, Int>) -> Unit
     ) {
-        val userId = auth.uid ?: return
+        val userId = uid()
+        if (userId.isEmpty()) return
 
         assignmentRef()
             .whereEqualTo("courseId", courseId)
             .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { snap ->
-                val list = snap.documents.mapNotNull {
-                    it.toObject<StudyAssignment>()
-                }
-
-                val total = list.size
-                val todo = list.count { it.status == "TODO" }
-                val done = list.count { it.status == "DONE" }
-
-                onResult(Triple(total, todo, done))
+                val list = snap.toObjects(StudyAssignment::class.java)
+                onResult(
+                    Triple(
+                        list.size,
+                        list.count { it.status == "TODO" },
+                        list.count { it.status == "DONE" }
+                    )
+                )
             }
     }
 }

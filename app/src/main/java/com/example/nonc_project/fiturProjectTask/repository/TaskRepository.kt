@@ -4,13 +4,23 @@ import com.example.nonc_project.fiturProjectTask.model.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObjects
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 
 
 class TaskRepository {
 
-    private val taskRef = FirebaseFirestore.getInstance().collection("tasks")
+    private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+    private val taskRef = db.collection("tasks")
+
+    private fun uid() = auth.currentUser?.uid ?: ""
 
     fun createTask(task: Task, onResult: (Boolean) -> Unit) {
+        val userId = uid()
+        if (userId.isEmpty()) return
+
+        task.userId = userId
+
         taskRef.document(task.taskId)
             .set(task)
             .addOnSuccessListener { onResult(true) }
@@ -21,15 +31,17 @@ class TaskRepository {
         projectId: String,
         onResult: (List<Task>) -> Unit
     ) {
+        val userId = uid()
+        if (userId.isEmpty()) return
+
         taskRef
             .whereEqualTo("projectId", projectId)
+            .whereEqualTo("userId", userId)
             .get()
-            .addOnSuccessListener { snapshot ->
-                onResult(snapshot.toObjects())
+            .addOnSuccessListener { snap ->
+                onResult(snap.toObjects(Task::class.java))
             }
-            .addOnFailureListener {
-                onResult(emptyList())
-            }
+            .addOnFailureListener { onResult(emptyList()) }
     }
 
     fun updateTaskProgress(
@@ -39,65 +51,62 @@ class TaskRepository {
         status: String,
         onResult: (Boolean) -> Unit
     ) {
+        val userId = uid()
+        if (userId.isEmpty()) return
+
         taskRef.document(taskId)
-            .update(
-                mapOf(
-                    "progress" to progress,
-                    "status" to status,
-                    "updatedAt" to System.currentTimeMillis()
-                )
-            )
-            .addOnSuccessListener {
-                Log.d("TASK_REPO", "Task updated: $taskId")
-
-                updateActiveTaskCount(projectId)
-                onResult(true)
+            .get()
+            .addOnSuccessListener { doc ->
+                if (doc.exists() && doc.getString("userId") == userId) {
+                    doc.reference.update(
+                        mapOf(
+                            "progress" to progress,
+                            "status" to status,
+                            "updatedAt" to System.currentTimeMillis()
+                        )
+                    ).addOnSuccessListener {
+                        updateActiveTaskCount(projectId)
+                        onResult(true)
+                    }
+                } else {
+                    onResult(false)
+                }
             }
-            .addOnFailureListener {
-                Log.e("TASK_REPO", "Task update FAILED", it)
-                onResult(false)
-            }
-
     }
-
 
     fun calculateProjectProgress(
         projectId: String,
         onResult: (Int) -> Unit
     ) {
+        val userId = uid()
+        if (userId.isEmpty()) return
+
         taskRef
             .whereEqualTo("projectId", projectId)
+            .whereEqualTo("userId", userId)
             .get()
-//            .addOnSuccessListener { snapshot ->
-//                val tasks = snapshot.toObjects<Task>()
-//                if (tasks.isEmpty()) {
-//                    onResult(0)
-//                    return@addOnSuccessListener
-//                }
-//                onResult(tasks.sumOf { it.progress } / tasks.size)
-//            }
-            .addOnSuccessListener { snapshot ->
-                val tasks = snapshot.toObjects<Task>()
-                val avg = if (tasks.isEmpty()) 0 else tasks.sumOf { it.progress } / tasks.size
-
-                Log.d("TASK_REPO", "Calculated project avg: $avg")
+            .addOnSuccessListener { snap ->
+                val tasks = snap.toObjects(Task::class.java)
+                val avg =
+                    if (tasks.isEmpty()) 0
+                    else tasks.sumOf { it.progress } / tasks.size
                 onResult(avg)
             }
-
     }
+
     fun updateActiveTaskCount(projectId: String) {
+        val userId = uid()
+        if (userId.isEmpty()) return
+
         taskRef
             .whereEqualTo("projectId", projectId)
+            .whereEqualTo("userId", userId)
             .whereIn("status", listOf("TODO", "IN PROGRESS"))
             .get()
-            .addOnSuccessListener { snapshot ->
-                val count = snapshot.size()
-
-                FirebaseFirestore.getInstance()
-                    .collection("projects")
+            .addOnSuccessListener { snap ->
+                db.collection("projects")
                     .document(projectId)
-                    .update("activeTaskCount", count)
+                    .update("activeTaskCount", snap.size())
             }
     }
-
 }

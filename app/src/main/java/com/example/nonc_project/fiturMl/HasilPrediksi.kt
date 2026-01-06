@@ -7,11 +7,14 @@ import com.example.nonc_project.HomePage
 import com.example.nonc_project.R
 import com.example.nonc_project.databinding.ActivityHasilPrediksiBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 
 class HasilPrediksi : AppCompatActivity() {
 
     private lateinit var binding: ActivityHasilPrediksiBinding
+
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +24,6 @@ class HasilPrediksi : AppCompatActivity() {
         val prediksi = intent.getStringExtra("prediksi") ?: "Tidak diketahui"
         binding.statusBadge.text = prediksi
 
-        // Warna badge
         when (prediksi.uppercase()) {
             "BAIK" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_green)
             "CUKUP" -> binding.statusBadge.setBackgroundResource(R.drawable.badge_blue)
@@ -29,46 +31,25 @@ class HasilPrediksi : AppCompatActivity() {
             else -> binding.statusBadge.setBackgroundResource(R.drawable.badge_red)
         }
 
-        // Deskripsi
         binding.resultDescription.text = when (prediksi) {
-            "Baik" -> "🔥 Kamu berada pada kategori sangat baik! Pertahankan pola belajar."
-            "Cukup" -> "👍 Cukup baik! Masih ada ruang untuk berkembang."
-            "Kurang Baik" -> "⚠ Perlu peningkatan belajar dan manajemen waktu."
-            else -> "❌ Prediksi gagal atau data tidak valid."
+            "Baik" -> "🔥 Kamu berada pada kategori sangat baik!"
+            "Cukup" -> "👍 Masih bisa ditingkatkan."
+            "Kurang Baik" -> "⚠ Perlu perbaikan pola belajar."
+            else -> "❌ Prediksi gagal."
         }
 
-        // Bottom Nav
-        binding.bottomNavigation.setOnItemSelectedListener {
-            if (it.itemId == R.id.menu_home) {
-                navigateHome()
-                true
-            } else false
-        }
-
-        // Tombol simpan + kembali
         binding.btnBackHome.setOnClickListener {
-            savePredictionAndGoHome()
+            saveToFirestoreAndGoHome()
         }
     }
 
-    private fun savePredictionAndGoHome() {
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user == null) {
-            navigateHome()
-            return
-        }
-
-        val uid = user.uid
-        val database = FirebaseDatabase.getInstance().reference
-
-        val predictionRef = database
-            .child("ml_result")
-            .child(uid)
-            .push()
+    private fun saveToFirestoreAndGoHome() {
+        val user = auth.currentUser ?: return navigateHome()
 
         val data = MLInputHolder.data
 
-        val predictionMap = mapOf(
+        val doc = hashMapOf(
+            "userId" to user.uid,
             "result" to binding.statusBadge.text.toString(),
             "timestamp" to System.currentTimeMillis(),
             "inputs" to mapOf(
@@ -76,23 +57,25 @@ class HasilPrediksi : AppCompatActivity() {
                 "attendance" to data.attendance,
                 "sleepHours" to data.sleepHours,
                 "previousScores" to data.previousScores,
-                "motivation" to data.motivation,
-                "extracurricular" to data.extracurricular,
                 "tutoringSessions" to data.tutoringSessions,
                 "physicalActivity" to data.physicalActivity,
+                "extracurricular" to data.extracurricular,
+                "motivation" to data.motivation,
                 "learningDisabilities" to data.learningDisabilities
             )
         )
 
-        predictionRef.setValue(predictionMap)
+        db.collection("ml_result")
+            .add(doc)
             .addOnSuccessListener { navigateHome() }
             .addOnFailureListener { navigateHome() }
     }
 
     private fun navigateHome() {
-        val intent = Intent(this, HomePage::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
+        startActivity(
+            Intent(this, HomePage::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        )
         finish()
     }
 }

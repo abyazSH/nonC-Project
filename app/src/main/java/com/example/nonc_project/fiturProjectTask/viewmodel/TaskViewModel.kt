@@ -15,30 +15,16 @@ class TaskViewModel : ViewModel() {
     private val _taskList = MutableLiveData<List<Task>>()
     val taskList: LiveData<List<Task>> = _taskList
 
-    private val _isSuccess = MutableLiveData<Boolean>()
-    val isSuccess: LiveData<Boolean> = _isSuccess
-
-    /**
-     * Load tasks by project
-     */
     fun loadTasks(projectId: String) {
         taskRepo.getTasksByProject(projectId) {
             _taskList.postValue(it)
         }
     }
 
-    /**
-     * Create task
-     */
     fun createTask(task: Task) {
-        taskRepo.createTask(task) {
-            _isSuccess.postValue(it)
-        }
+        taskRepo.createTask(task) {}
     }
 
-    /**
-     * Update task + auto update project progress
-     */
     fun updateTaskAndProject(
         projectId: String,
         taskId: String,
@@ -46,21 +32,13 @@ class TaskViewModel : ViewModel() {
         status: String
     ) {
         taskRepo.updateTaskProgress(
-            projectId,
-            taskId,
-            progress,
-            status
+            projectId, taskId, progress, status
         ) { success ->
             if (success) {
                 taskRepo.calculateProjectProgress(projectId) { avg ->
                     projectRepo.updateProjectProgress(projectId, avg)
                 }
-                _isSuccess.postValue(true)
-            } else {
-                _isSuccess.postValue(false)
             }
         }
     }
-
-
 }

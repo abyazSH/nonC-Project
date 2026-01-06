@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "67144640894",
+    "firebase_url": "https://noncproject-default-rtdb.firebaseio.com",
     "project_id": "noncproject",
     "storage_bucket": "noncproject.firebasestorage.app"
   },

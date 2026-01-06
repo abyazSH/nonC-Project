@@ -6,14 +6,7 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        getByName("debug") {
-            storeFile = file("C:\\AndroidStudio\\MyKeyStone\\MyKeyStore")
-            storePassword = "140122"
-            keyAlias = "KeyNonC"
-            keyPassword = "140122"
-        }
-    }
+
     namespace = "com.example.nonc_project"
     compileSdk = 36
 
@@ -25,9 +18,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig = signingConfigs.getByName("debug")
     }
-
 
     buildTypes {
         release {
@@ -61,23 +52,25 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
-    // Material (pakai satu saja)
+    // Material
     implementation("com.google.android.material:material:1.11.0")
 
-    // Recycler & UI
+    // RecyclerView & Card
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.cardview:cardview:1.0.0")
 
-    // Firebase BOM (SATU SUMBER VERSI)
+    // 🔥 Firebase BOM (SATU PUSAT VERSI)
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
 
-    // Firebase
+    // 🔥 Firebase (Firestore + Auth ONLY)
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
 
-    // Google Login
+    // ❌ DIHAPUS
+    // implementation("com.google.firebase:firebase-database-ktx")
+
+    // Google Sign In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     // Image & Animation

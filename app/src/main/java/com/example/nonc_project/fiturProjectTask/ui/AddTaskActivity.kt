@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.nonc_project.databinding.ActivityAddTaskBinding
 import com.example.nonc_project.fiturProjectTask.model.Task
 import com.example.nonc_project.fiturProjectTask.viewmodel.TaskViewModel
+import com.google.firebase.auth.FirebaseAuth
 import java.util.UUID
 
 class AddTaskActivity : AppCompatActivity() {
@@ -34,12 +35,13 @@ class AddTaskActivity : AppCompatActivity() {
             val task = Task(
                 taskId = UUID.randomUUID().toString(),
                 projectId = projectId,
+                userId = FirebaseAuth.getInstance().uid!!,
                 title = title,
                 description = desc,
                 progress = 0,
-                status = "TODO",
-                createdAt = System.currentTimeMillis()
+                status = "TODO"
             )
+
 
             viewModel.createTask(task)
             finish()

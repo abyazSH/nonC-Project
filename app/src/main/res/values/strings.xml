@@ -6,5 +6,7 @@
         <item>IN PROGRESS</item>
         <item>DONE</item>
     </string-array>
-
+    <string name="default_web_client_id">
+        203510346510-8a604im7lm3470vqdhk38rle4n8003jv.apps.googleusercontent.com
+    </string>
 </resources>

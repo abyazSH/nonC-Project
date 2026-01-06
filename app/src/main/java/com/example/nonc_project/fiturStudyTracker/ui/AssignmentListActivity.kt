@@ -24,16 +24,17 @@ class AssignmentListActivity : AppCompatActivity() {
 
         courseId = intent.getStringExtra("COURSE_ID") ?: return
 
-        // =========================
-        // RecyclerView
-        // =========================
+        // ===== BACK =====
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
+        // ===== RV =====
         adapter = AssignmentAdapter(emptyList())
         binding.rvAssignments.layoutManager = LinearLayoutManager(this)
         binding.rvAssignments.adapter = adapter
 
-        // =========================
-        // OBSERVE DATA
-        // =========================
+        // ===== OBSERVE =====
         viewModel.assignmentList.observe(this) { list ->
             adapter.updateData(list)
 
@@ -44,18 +45,14 @@ class AssignmentListActivity : AppCompatActivity() {
                 if (list.isEmpty()) View.GONE else View.VISIBLE
         }
 
-        // =========================
-        // LOAD DATA
-        // =========================
+        // ===== LOAD =====
         viewModel.loadAssignments(courseId)
 
-        // =========================
-        // ADD ASSIGNMENT
-        // =========================
+        // ===== ADD =====
         binding.fabAdd.setOnClickListener {
-            val intent = Intent(this, AddAssignmentActivity::class.java)
-            intent.putExtra("COURSE_ID", courseId)
-            startActivity(intent)
+            val i = Intent(this, AddAssignmentActivity::class.java)
+            i.putExtra("COURSE_ID", courseId)
+            startActivity(i)
         }
     }
 

@@ -20,7 +20,17 @@ class CourseDetailActivity : AppCompatActivity() {
         binding = ActivityCourseDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        courseId = intent.getStringExtra("COURSE_ID") ?: return
+        courseId = intent.getStringExtra("COURSE_ID") ?: run {
+            finish()
+            return
+        }
+
+        // =============================
+        // BACK BUTTON
+        // =============================
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
 
         // =============================
         // LOAD DATA
@@ -29,7 +39,7 @@ class CourseDetailActivity : AppCompatActivity() {
         viewModel.loadAssignmentStats(courseId)
 
         // =============================
-        // OBSERVE COURSE
+        // OBSERVE COURSE DETAIL
         // =============================
         viewModel.courseList.observe(this) { list ->
             val course = list.firstOrNull { it.courseId == courseId } ?: return@observe
@@ -38,23 +48,26 @@ class CourseDetailActivity : AppCompatActivity() {
         }
 
         // =============================
-        // OBSERVE STATS
+        // OBSERVE ASSIGNMENT STATS
         // =============================
         viewModel.assignmentStats.observe(this) { stats ->
-            val total = stats.first
-            val todo = stats.second
-            val done = stats.third
-
-            binding.tvStats.text =
-                "Assignments: $total | TODO: $todo | DONE: $done"
+            binding.tvTotal.text = stats.first.toString()
+            binding.tvTodo.text = stats.second.toString()
+            binding.tvDone.text = stats.third.toString()
         }
+
+        // =============================
+        // VIEW ASSIGNMENTS
+        // =============================
         binding.btnAssignments.setOnClickListener {
             val intent = Intent(this, AssignmentListActivity::class.java)
             intent.putExtra("COURSE_ID", courseId)
             startActivity(intent)
         }
 
-
+        // =============================
+        // DELETE COURSE
+        // =============================
         binding.btnDelete.setOnClickListener {
             showDeleteConfirm()
         }
@@ -63,7 +76,7 @@ class CourseDetailActivity : AppCompatActivity() {
     private fun showDeleteConfirm() {
         AlertDialog.Builder(this)
             .setTitle("Delete Course")
-            .setMessage("Yakin ingin menghapus mata kuliah ini?")
+            .setMessage("Yakin ingin menghapus mata kuliah ini beserta seluruh assignment?")
             .setPositiveButton("Hapus") { _, _ ->
                 viewModel.deleteCourse(courseId)
                 finish()

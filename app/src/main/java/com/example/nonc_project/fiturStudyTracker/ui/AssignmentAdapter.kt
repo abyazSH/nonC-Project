@@ -80,12 +80,17 @@ class AssignmentAdapter(private var items: List<StudyAssignment>) :
         holder.binding.root.setOnClickListener {
             val ctx = holder.itemView.context
             val intent = Intent(ctx, AssignmentDetailActivity::class.java)
+
+            intent.putExtra("ASSIGNMENT_ID", a.assignmentId)
+            intent.putExtra("COURSE_ID", a.courseId)
             intent.putExtra("TITLE", a.title)
             intent.putExtra("DESC", a.description)
             intent.putExtra("STATUS", a.status)
             intent.putExtra("DUE", a.dueDate)
+
             ctx.startActivity(intent)
         }
+
     }
 
     override fun getItemCount() = items.size
