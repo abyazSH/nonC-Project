@@ -53,12 +53,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/card_bg">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="👋 Selamat datang di fitur Project"
+                android:text="Selamat datang di fitur Project"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
@@ -92,6 +93,7 @@
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_input_add"
         android:layout_margin="16dp"
+        android:backgroundTint="@color/accent"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -99,7 +101,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:background="@color/accent"
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
