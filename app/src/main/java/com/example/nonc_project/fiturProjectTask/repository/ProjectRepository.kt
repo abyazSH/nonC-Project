@@ -15,7 +15,7 @@ class ProjectRepository {
             .addOnFailureListener { onResult(false) }
     }
 
-    // 🔥 REALTIME OBSERVER (INI YANG PENTING)
+    // REALTIME OBSERVER
     fun observeProjectsByUser(
         userId: String,
         onResult: (List<Project>) -> Unit

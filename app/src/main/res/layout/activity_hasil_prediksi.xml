@@ -48,18 +48,7 @@
                         android:textColor="#888888"/>
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/icon_search"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_history"
-                    android:layout_marginEnd="16dp"/>
 
-                <ImageView
-                    android:id="@+id/icon_menu"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_menu"/>
             </LinearLayout>
 
             <!-- Image Card -->

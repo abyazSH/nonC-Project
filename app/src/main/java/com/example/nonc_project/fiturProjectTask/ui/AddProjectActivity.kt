@@ -48,7 +48,7 @@ class AddProjectActivity : AppCompatActivity() {
             finish()
         }
 
-        // ✅ CANCEL BUTTON
+        // CANCEL BUTTON
         binding.btnCancelProject.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("Batalkan?")

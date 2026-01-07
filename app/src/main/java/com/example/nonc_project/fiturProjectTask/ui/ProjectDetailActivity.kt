@@ -26,7 +26,7 @@ class ProjectDetailActivity : AppCompatActivity() {
         projectId = intent.getStringExtra("PROJECT_ID") ?: return
         val userId = FirebaseAuth.getInstance().uid ?: return
 
-        // 🔥 REALTIME OBSERVE PROJECT
+
         projectViewModel.observeProjects(userId)
 
         projectViewModel.projectList.observe(this) { list ->
@@ -39,7 +39,7 @@ class ProjectDetailActivity : AppCompatActivity() {
                 "${project.progressPercentage}% selesai"
         }
 
-        // Load tasks (opsional kalau mau dipakai)
+        // Load tasks
         taskViewModel.loadTasks(projectId)
 
         binding.btnOpenTasks.setOnClickListener {

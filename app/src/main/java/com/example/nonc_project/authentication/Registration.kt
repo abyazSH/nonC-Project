@@ -78,10 +78,10 @@ class Registration : AppCompatActivity() {
                             "uid" to user.uid
                         )
                     )
-                    .addOnSuccessListener {
+
                         startActivity(Intent(this, HomePage::class.java))
                         finish()
-                    }
+
             }
             .addOnFailureListener {
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()

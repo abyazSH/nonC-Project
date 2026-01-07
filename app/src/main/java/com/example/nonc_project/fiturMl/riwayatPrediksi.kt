@@ -33,20 +33,28 @@ class riwayatPrediksi : AppCompatActivity() {
     }
 
     private fun loadData() {
-        val user = auth.currentUser ?: return
+        val user = auth.currentUser
+        if (user == null) {
+            Toast.makeText(this, "User belum login", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         db.collection("ml_result")
             .whereEqualTo("userId", user.uid)
-            .orderBy("timestamp")
             .get()
             .addOnSuccessListener { snapshot ->
+                if (snapshot.isEmpty) {
+                    Toast.makeText(this, "Riwayat kosong", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
+                }
+
                 val list = snapshot.documents.map {
                     RiwayatModel(
                         id = it.id,
                         result = it.getString("result") ?: "-",
                         timestamp = it.getLong("timestamp") ?: 0L
                     )
-                }.reversed()
+                }.sortedByDescending { it.timestamp }
 
                 binding.recyclerRiwayat.adapter =
                     RiwayatAdapter(list) {}

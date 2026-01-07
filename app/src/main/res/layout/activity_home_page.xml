@@ -15,13 +15,7 @@
       android:padding="12dp"
       android:elevation="2dp">
 
-    <ImageView
-        android:id="@+id/icon_menu"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_menu"
-        android:layout_gravity="center_vertical"
-        android:paddingEnd="8dp"/>
+
 
     <LinearLayout
         android:orientation="vertical"

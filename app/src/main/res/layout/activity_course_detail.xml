@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color">
 
-    <!-- ================= HEADER ================= -->
+
     <LinearLayout
         android:id="@+id/header_container"
         android:layout_width="0dp"
@@ -22,7 +22,7 @@
             android:id="@+id/btnBack"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_menu"
+            android:src="@drawable/ic_arrow_right"
             android:contentDescription="back"/>
 
         <TextView
@@ -35,7 +35,7 @@
             android:textColor="#111827"/>
     </LinearLayout>
 
-    <!-- ================= COURSE INFO CARD ================= -->
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardCourse"
         android:layout_width="0dp"
@@ -55,7 +55,7 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- Course Icon -->
+
             <TextView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
@@ -105,7 +105,7 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- ================= STATISTIC CARD ================= -->
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardStats"
         android:layout_width="0dp"
@@ -199,7 +199,6 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- ================= VIEW ASSIGNMENTS ================= -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAssignments"
         android:layout_width="0dp"

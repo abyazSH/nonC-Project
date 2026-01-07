@@ -42,7 +42,7 @@ class ProjectAdapter(
         holder.tvProgressPercent.text =
             "${project.progressPercentage}% selesai"
 
-        // ===== BADGE TASK AKTIF =====
+        //  BADGE TASK AKTIF
         val activeCount = project.activeTaskCount
 
         if (activeCount > 0) {
